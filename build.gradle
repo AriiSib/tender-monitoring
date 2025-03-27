@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.7.5'
     implementation 'org.seleniumhq.selenium:selenium-java:4.30.0'
     implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.30.0'
+    implementation 'org.jsoup:jsoup:1.19.1'
     implementation 'com.rometools:rome:2.1.0'
 
     compileOnly 'org.projectlombok:lombok'
