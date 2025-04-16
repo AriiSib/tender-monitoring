@@ -1,7 +1,7 @@
 package com.khokhlov.tendermonitoring.controller;
 
 import com.khokhlov.tendermonitoring.model.entity.Tender;
-import com.khokhlov.tendermonitoring.service.TenderRssService;
+import com.khokhlov.tendermonitoring.service.TenderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,17 +12,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/rss")
 @RequiredArgsConstructor
-public class RssController {
+public class TenderController {
 
-    private final TenderRssService tenderService;
+    private final TenderService tenderService;
 
     @GetMapping("/fetch")
     public List<Tender> fetchFromRSS() {
-        return tenderService.fetchAndSaveFromRSS();
+        return tenderService.fetchAndSave();
     }
 
     @GetMapping("/all")
     public List<Tender> getAllTenders() {
-        return tenderService.getAllTenders();
+        return tenderService.getAll();
     }
 }

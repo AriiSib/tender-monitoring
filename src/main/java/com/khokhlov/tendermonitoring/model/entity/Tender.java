@@ -27,8 +27,8 @@ public class Tender {
 //    private String description;
     @Column(columnDefinition = "TEXT")
     private String searchParams;
-    @Column(columnDefinition = "TEXT")
-    private String procurementLaws;
+//    @Column(columnDefinition = "TEXT")
+//    private String procurementLaws;
     @Column(columnDefinition = "TEXT")
     private String stage;
 //    @Column(columnDefinition = "TEXT")
@@ -39,8 +39,8 @@ public class Tender {
 //    private String customer;
     @Column(columnDefinition = "TEXT")
     private String price;
-    @Column(columnDefinition = "TEXT")
-    private String currency;
+//    @Column(columnDefinition = "TEXT")
+//    private String currency;
     @Column(columnDefinition = "TEXT")
     private String publishedDate;
     @Column(columnDefinition = "TEXT")
