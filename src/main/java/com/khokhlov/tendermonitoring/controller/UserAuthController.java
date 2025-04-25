@@ -8,10 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@SessionAttributes({"username"})
 public class UserAuthController {
 
     private final UserService userService;
@@ -24,11 +26,11 @@ public class UserAuthController {
     @PostMapping("/login")
     public String login(@RequestParam String username,
                         @RequestParam String password,
-                        HttpSession session) {
+                        Model model) {
 
         // TODO: validation
         UserDTO user = userService.login(new UserDTO(username, password));
-        session.setAttribute("username", user.username());
+        model.addAttribute("username", username);
 
         return "redirect:/index";
     }
@@ -48,7 +50,9 @@ public class UserAuthController {
     }
 
     @PostMapping("/logout")
-    public String logout() {
+    public String logout(HttpSession session, SessionStatus status) {
+        status.setComplete();
+        session.invalidate();
         return "redirect:/auth/login";
     }
 }
