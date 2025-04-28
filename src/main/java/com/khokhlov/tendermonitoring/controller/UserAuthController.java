@@ -2,6 +2,7 @@ package com.khokhlov.tendermonitoring.controller;
 
 import com.khokhlov.tendermonitoring.model.dto.UserCreateDTO;
 import com.khokhlov.tendermonitoring.model.dto.UserDTO;
+import com.khokhlov.tendermonitoring.model.dto.UserLoginDTO;
 import com.khokhlov.tendermonitoring.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 @Controller
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@SessionAttributes({"username"})
+@SessionAttributes({"user"})
 public class UserAuthController {
 
     private final UserService userService;
@@ -24,13 +25,12 @@ public class UserAuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username,
-                        @RequestParam String password,
+    public String login(UserLoginDTO userDTO,
                         Model model) {
 
         // TODO: validation
-        UserDTO user = userService.login(new UserDTO(username, password));
-        model.addAttribute("username", username);
+        UserDTO user = userService.login(userDTO);
+        model.addAttribute("user", user);
 
         return "redirect:/index";
     }
@@ -41,8 +41,7 @@ public class UserAuthController {
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute UserCreateDTO user,
-                               Model model) {
+    public String registration(UserCreateDTO user) {
 
         userService.registration(user);
 

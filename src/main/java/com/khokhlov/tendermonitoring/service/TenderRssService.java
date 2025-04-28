@@ -15,6 +15,7 @@ import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -25,6 +26,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class TenderRssService {
 
     private final TenderRepository tenderRepository;
@@ -41,6 +43,7 @@ public class TenderRssService {
     }
 
     @SneakyThrows
+    @Transactional()
     public List<Tender> fetchAndSaveFromRSS() {
         List<Tender> tenders = new ArrayList<>();
 

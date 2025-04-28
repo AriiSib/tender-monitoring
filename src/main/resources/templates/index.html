@@ -18,7 +18,7 @@
             Tender Monitoring
         </a>
         <div class="d-flex align-items-center">
-            <span class="navbar-text me-3" th:text="${session.username}">username</span>
+            <span class="navbar-text me-3" th:text="${session.user.username}">username</span>
             <form th:action="@{/auth/logout}" method="post">
                 <button class="btn btn-outline-danger" type="submit">Logout</button>
             </form>
