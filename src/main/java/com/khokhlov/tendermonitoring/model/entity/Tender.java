@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
@@ -21,33 +22,28 @@ public class Tender {
 
     @Column(columnDefinition = "TEXT")
     private String title;
+
     @Column(columnDefinition = "TEXT")
     private String link;
-//    @Column(columnDefinition = "TEXT")
-//    private String description;
+
     @Column(columnDefinition = "TEXT")
     private String searchParams;
-//    @Column(columnDefinition = "TEXT")
-//    private String procurementLaws;
+
     @Column(columnDefinition = "TEXT")
     private String stage;
-//    @Column(columnDefinition = "TEXT")
-//    private String foundResult;
+
     @Column(columnDefinition = "TEXT")
     private String purchaseObject;
-//    @Column(columnDefinition = "TEXT")
-//    private String customer;
-    @Column(columnDefinition = "TEXT")
-    private String price;
-//    @Column(columnDefinition = "TEXT")
-//    private String currency;
-    @Column(columnDefinition = "TEXT")
-    private String publishedDate;
-    @Column(columnDefinition = "TEXT")
-    private String updatedDate;
-    private String deadline;
+
+    private BigDecimal price;
+
+    private LocalDate publishedDate;
+    private LocalDate updatedDate;
+    private LocalDate deadline;
+
     @Column(columnDefinition = "TEXT")
     private String purchaseCode;
+
     @Column(columnDefinition = "TEXT")
     private String author;
 }

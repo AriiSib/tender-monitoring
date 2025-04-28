@@ -9,5 +9,5 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        hbm2ddl.auto: validate
+        hbm2ddl.auto: create-drop
     open-in-view: false

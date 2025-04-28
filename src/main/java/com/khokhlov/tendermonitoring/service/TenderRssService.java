@@ -2,6 +2,8 @@ package com.khokhlov.tendermonitoring.service;
 
 import com.khokhlov.tendermonitoring.model.entity.Tender;
 import com.khokhlov.tendermonitoring.repository.TenderRepository;
+import com.khokhlov.tendermonitoring.util.DateParser;
+import com.khokhlov.tendermonitoring.util.PriceParser;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
@@ -17,10 +19,14 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,9 +62,9 @@ public class TenderRssService {
 
                 String description = entry.getDescription().getValue();
 
-                String publishedDate = entry.getPublishedDate() != null
-                        ? entry.getPublishedDate().toString()
-                        : "Не указано";
+                LocalDate publishedDate = entry.getPublishedDate() != null
+                        ? entry.getPublishedDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+                        : null;
 
                 String author = entry.getAuthor();
 
@@ -68,11 +74,11 @@ public class TenderRssService {
                 String procurementLaws = extractData(doc, "Закупки по:");
                 String stage = extractData(doc, "Этап закупки:");
                 String purchaseObject = extractData(doc, "Наименование объекта закупки:");
-                String price = extractData(doc, "Начальная цена контракта:");
+                BigDecimal price = PriceParser.parsePrice(extractData(doc, "Начальная цена контракта:"));
                 String currency = extractData(doc, "Валюта:");
-                String updatedDate = extractData(doc, "Обновлено:");
+                LocalDate updatedDate = DateParser.parseDate(extractData(doc, "Обновлено:"));
                 String purchaseCode = extractData(doc, "Идентификационный код закупки (ИКЗ):");
-                String deadline = null;
+                LocalDate deadline = null;
 
                 Tender tender = new Tender(
                         null,
@@ -119,7 +125,6 @@ public class TenderRssService {
 
         return "Не указано";
     }
-
 
 
     private String extractData(Document doc, String strongLabel) {

@@ -2,6 +2,8 @@ package com.khokhlov.tendermonitoring.service;
 
 import com.khokhlov.tendermonitoring.model.entity.Tender;
 import com.khokhlov.tendermonitoring.repository.TenderRepository;
+import com.khokhlov.tendermonitoring.util.DateParser;
+import com.khokhlov.tendermonitoring.util.PriceParser;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,6 +12,9 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,22 +47,22 @@ public class TenderService {
                 String stage = entry.select("div.registry-entry__header-mid__title.text-normal").text();
 
 
-                String deadline = entry.select(".data-block__title:contains(Окончание подачи заявок)")
+                LocalDate deadline = DateParser.parseDate(entry.select(".data-block__title:contains(Окончание подачи заявок)")
                         .first()
                         .nextElementSibling()
-                        .text();
+                        .text());
 
-                String publicationDate = entry.select(".data-block__title:contains(Размещено)")
+                LocalDate publicationDate = DateParser.parseDate(entry.select(".data-block__title:contains(Размещено)")
                         .first()
                         .nextElementSibling()
-                        .text();
+                        .text());
 
-                String updatedDate = entry.select(".data-block__title:contains(Обновлено)")
+                LocalDate updatedDate = DateParser.parseDate(entry.select(".data-block__title:contains(Обновлено)")
                         .first()
                         .nextElementSibling()
-                        .text();
+                        .text());
 
-                String price = entry.select(".price-block__value").text();
+                BigDecimal price = PriceParser.parsePrice(entry.select(".price-block__value").text());
 
                 String customer = entry.select(".registry-entry__body-href a").text();
 
