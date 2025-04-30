@@ -16,7 +16,7 @@ public class RssController {
 
     private final TenderRssService tenderService;
 
-    @GetMapping("/fetch")
+    @GetMapping("/search")
     public List<Tender> fetchFromRSS() {
         return tenderService.fetchAndSaveFromRSS();
     }

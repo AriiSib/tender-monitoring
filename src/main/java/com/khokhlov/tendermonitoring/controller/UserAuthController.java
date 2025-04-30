@@ -32,7 +32,7 @@ public class UserAuthController {
         UserDTO user = userService.login(userDTO);
         model.addAttribute("user", user);
 
-        return "redirect:/index";
+        return "redirect:/home";
     }
 
     @GetMapping("/registration")
