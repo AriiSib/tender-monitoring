@@ -57,8 +57,30 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label for="pageSize">Количество тендеров на странице</label>
+            <select id="pageSize" th:field="*{pageSize}">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+
         <button type="submit">Найти</button>
     </form>
+</div>
+
+<br>
+<!--change the class and css!!!-->
+<div class="search-form" th:if="${not #lists.isEmpty(tenders)}">
+    <h2>Результаты поиска</h2>
+    <ul th:each="tender : ${tenders}">
+        <li>
+            <a th:href="${tender.link}" th:text="${tender.title}" target="_blank"></a>
+            <span th:text="'Цена: ' + ${tender.price}"></span><br>
+            <span th:text="'Окончание подачи заявок: ' + (${tender.deadline} != null ? ${#temporals.format(tender.deadline, 'dd.MM.yyyy')} : '-')"></span>
+        </li>
+    </ul>
 </div>
 
 </body>

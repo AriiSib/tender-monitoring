@@ -20,6 +20,10 @@ public class HomeController {
     @GetMapping()
     public String homePage(Model model) {
         SearchFormAttribute searchForm = new SearchFormAttribute();
+        searchForm.setStages(List.of("Подача заявок", "Работа комиссии"));
+        searchForm.setTypes(List.of("44-ФЗ", "223-ФЗ"));
+
+
         model.addAttribute("searchForm", searchForm);
         model.addAttribute("tenders", List.of());
         return "home";
