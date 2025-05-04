@@ -30,8 +30,9 @@ public class UrlBuilder {
             if (attribute.getStages().contains("Закупка отменена"))  url.append("pa=on&");
         }
 
-        url.append("morphology=on&search-filter=Дате+размещения&sortBy=PUBLISH_DATE&pageNumber=1&");
-        url.append("recordsPerPage=_").append(attribute.getPageSize());
+        url.append("morphology=on&search-filter=Дате+размещения&sortBy=PUBLISH_DATE");
+        url.append("&pageNumber=").append(attribute.getCurrentPage());
+        url.append("&recordsPerPage=_").append(attribute.getPageSize());
 
         return url.toString();
     }

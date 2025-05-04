@@ -9,5 +9,6 @@ public class SearchFormAttribute {
     private String keyword;
     private List<String> stages;
     private List<String> types;
+    private int currentPage = 1;
     private Integer pageSize;
 }

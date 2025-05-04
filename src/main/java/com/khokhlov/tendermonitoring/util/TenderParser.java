@@ -1,6 +1,7 @@
 package com.khokhlov.tendermonitoring.util;
 
 import com.khokhlov.tendermonitoring.model.dto.TenderDTO;
+import com.khokhlov.tendermonitoring.model.entity.SearchResult;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,7 +14,8 @@ import java.util.List;
 
 public class TenderParser {
 
-    public static List<TenderDTO> parseTenders(String url) {
+    public static SearchResult parseTenders(String url) {
+        SearchResult searchResult = new SearchResult();
         List<TenderDTO> tenders = new ArrayList<>();
 
         try {
@@ -21,6 +23,8 @@ public class TenderParser {
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36")
                     .timeout(10000)
                     .get();
+
+            searchResult.setTotalCount(TotalElementParser.parseTotalElement(doc));
 
             Elements entries = doc.select(".search-registry-entry-block");
 
@@ -38,7 +42,6 @@ public class TenderParser {
                             .nextElementSibling()
                             .text());
                 } catch (Exception e) {
-                    deadline = null;
                 }
 
                 LocalDate publicationDate = null;
@@ -48,7 +51,6 @@ public class TenderParser {
                             .nextElementSibling()
                             .text());
                 } catch (Exception e) {
-                    publicationDate = null;
                 }
 
                 LocalDate updatedDate = null;
@@ -58,12 +60,26 @@ public class TenderParser {
                             .nextElementSibling()
                             .text());
                 } catch (Exception e) {
-                    updatedDate = null;
                 }
 
-                BigDecimal price = PriceParser.parsePrice(entry.select(".price-block__value").text());
-                String customer = entry.select(".registry-entry__body-href a").text();
-                String purchaseObject = entry.select(".registry-entry__body-value").text();
+                BigDecimal price = null;
+                try {
+                    price = PriceParser.parsePrice(entry.select(".price-block__value").text());
+                } catch (Exception e) {
+
+                }
+                String customer = null;
+                try {
+                    customer = entry.select(".registry-entry__body-href a").text();
+                } catch (Exception e) {
+
+                }
+                String purchaseObject = null;
+                try {
+                    purchaseObject = entry.select(".registry-entry__body-value").text();
+                } catch (Exception e) {
+
+                }
 
                 TenderDTO tender = new TenderDTO(
                         title,
@@ -86,6 +102,8 @@ public class TenderParser {
             System.err.println("Error parsing search page: " + e.getMessage());
         }
 
-        return tenders;
+        searchResult.setTenders(tenders);
+
+        return searchResult;
     }
 }

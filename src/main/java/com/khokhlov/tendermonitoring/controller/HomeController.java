@@ -1,7 +1,7 @@
 package com.khokhlov.tendermonitoring.controller;
 
 import com.khokhlov.tendermonitoring.model.entity.SearchFormAttribute;
-import com.khokhlov.tendermonitoring.service.TenderService;
+import com.khokhlov.tendermonitoring.model.entity.SearchResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +15,14 @@ import java.util.List;
 @RequestMapping("/home")
 public class HomeController {
 
-    private final TenderService tenderService;
-
     @GetMapping()
     public String homePage(Model model) {
-        SearchFormAttribute searchForm = new SearchFormAttribute();
-        searchForm.setStages(List.of("Подача заявок", "Работа комиссии"));
-        searchForm.setTypes(List.of("44-ФЗ", "223-ФЗ"));
+        SearchFormAttribute searchFormAttribute = new SearchFormAttribute();
+        searchFormAttribute.setStages(List.of("Подача заявок", "Работа комиссии"));
+        searchFormAttribute.setTypes(List.of("44-ФЗ", "223-ФЗ"));
 
-
-        model.addAttribute("searchForm", searchForm);
-        model.addAttribute("tenders", List.of());
+        model.addAttribute("searchFormAttribute", searchFormAttribute);
+        model.addAttribute("searchResult", new SearchResult());
         return "home";
     }
 }

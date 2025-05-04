@@ -29,12 +29,22 @@
 <div class="search-form">
     <h2>Поиск тендеров</h2>
 
-    <form th:action="@{/api/search}" method="post" th:object="${searchForm}">
+    <form th:action="@{/api/search}" method="post" th:object="${searchFormAttribute}">
+        <input type="hidden" th:field="*{currentPage}"/>
 
         <div class="form-group">
             <label for="keyword">Ключевые слова</label>
             <input id="keyword" type="text" th:field="*{keyword}"
                    placeholder="Например: уборка помещений, обслуживание">
+        </div>
+
+        <div class="form-group">
+            <label>Тип торгов</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" th:field="*{types}" value="44-ФЗ"> 44-ФЗ</label>
+                <label><input type="checkbox" th:field="*{types}" value="223-ФЗ"> 223-ФЗ</label>
+                <label><input type="checkbox" th:field="*{types}" value="615 ПП РФ"> 615 ПП РФ</label>
+            </div>
         </div>
 
         <div class="form-group">
@@ -44,16 +54,6 @@
                 <label><input type="checkbox" th:field="*{stages}" value="Работа комиссии"> Работа комиссии</label>
                 <label><input type="checkbox" th:field="*{stages}" value="Закупка завершена"> Закупка завершена</label>
                 <label><input type="checkbox" th:field="*{stages}" value="Закупка отменена"> Закупка отменена</label>
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <label>Тип торгов</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" th:field="*{types}" value="44-ФЗ"> 44-ФЗ</label>
-                <label><input type="checkbox" th:field="*{types}" value="223-ФЗ"> 223-ФЗ</label>
-                <label><input type="checkbox" th:field="*{types}" value="615 ПП РФ"> 615 ПП РФ</label>
             </div>
         </div>
 
@@ -71,16 +71,47 @@
 </div>
 
 <br>
-<!--change the class and css!!!-->
-<div class="search-form" th:if="${not #lists.isEmpty(tenders)}">
+
+<div class="search-form" th:if="${searchResult.totalCount > 0}">
     <h2>Результаты поиска</h2>
-    <ul th:each="tender : ${tenders}">
+    <p th:text="'Найдено ' + ${searchResult.totalCount} + ' тендеров'"></p>
+    <p th:text="'Страница ' + ${searchFormAttribute.currentPage} + ' из ' + ${searchResult.totalPages}"></p>
+
+    <ul th:each="tender : ${searchResult.tenders}">
         <li>
             <a th:href="${tender.link}" th:text="${tender.title}" target="_blank"></a>
-            <span th:text="'Цена: ' + ${tender.price}"></span><br>
-            <span th:text="'Окончание подачи заявок: ' + (${tender.deadline} != null ? ${#temporals.format(tender.deadline, 'dd.MM.yyyy')} : '-')"></span>
+            <span th:text="'Цена: ' + (${tender.price} != null ? ${tender.price} : '')"></span><br>
+            <span th:text="'Окончание подачи заявок: ' + (${tender.deadline} != null ? ${#temporals.format(tender.deadline, 'dd.MM.yyyy')} : '')"></span>
         </li>
     </ul>
+
+    <form th:action="@{/api/search}" method="post" th:object="${searchFormAttribute}">
+        <input type="hidden" th:field="*{keyword}">
+        <input type="hidden" th:field="*{stages}">
+        <input type="hidden" th:field="*{types}">
+        <input type="hidden" th:field="*{pageSize}">
+
+        <div class="pagination">
+            <button type="submit" th:if="${searchFormAttribute.currentPage > 1}"
+                    th:attr="name='currentPage', value=${searchFormAttribute.currentPage - 1}">
+                Назад
+            </button>
+
+            <span th:each="pageNum : ${#numbers.sequence(1, searchResult.totalPages)}">
+            <button type="submit"
+                    th:attr="name='currentPage', value=${pageNum}"
+                    th:classappend="${pageNum == searchFormAttribute.currentPage} ? 'btn btn-primary' : 'btn btn-light'">
+                <span th:text="${pageNum}"></span>
+            </button>
+        </span>
+
+            <button type="submit" th:if="${searchFormAttribute.currentPage < searchResult.totalPages}"
+                    th:attr="name='currentPage', value=${searchFormAttribute.currentPage + 1}">
+                Следующая
+            </button>
+
+        </div>
+    </form>
 </div>
 
 </body>
