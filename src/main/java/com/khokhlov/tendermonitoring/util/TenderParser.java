@@ -30,7 +30,7 @@ public class TenderParser {
 
             for (Element entry : entries) {
                 String title = entry.select(".registry-entry__header-top__title").text();
-                String link = entry.select("a[href*='regNumber']").attr("href");
+                String link = entry.select("div.registry-entry__header-mid__number a").attr("href");
                 String fullLink = "https://zakupki.gov.ru" + link;
                 String regNumber = entry.select("div.registry-entry__header-mid__number a").text().replaceAll("[^0-9]", "");
                 String stage = entry.select("div.registry-entry__header-mid__title.text-normal").text();
