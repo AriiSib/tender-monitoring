@@ -98,6 +98,9 @@
             </button>
 
             <span th:each="pageNum : ${#numbers.sequence(1, searchResult.totalPages)}">
+        <span th:if="${pageNum == 1 or pageNum == searchResult.totalPages
+                      or (pageNum >= searchFormAttribute.currentPage - 2 and pageNum <= searchFormAttribute.currentPage + 2)}">
+
             <button type="submit"
                     th:attr="name='currentPage', value=${pageNum}"
                     th:classappend="${pageNum == searchFormAttribute.currentPage} ? 'btn btn-primary' : 'btn btn-light'">
@@ -105,11 +108,13 @@
             </button>
         </span>
 
+        <span th:if="${(pageNum == searchFormAttribute.currentPage - 3) or (pageNum == searchFormAttribute.currentPage + 3)}"> ... </span>
+    </span>
+
             <button type="submit" th:if="${searchFormAttribute.currentPage < searchResult.totalPages}"
                     th:attr="name='currentPage', value=${searchFormAttribute.currentPage + 1}">
                 Следующая
             </button>
-
         </div>
     </form>
 </div>

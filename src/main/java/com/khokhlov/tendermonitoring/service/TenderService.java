@@ -22,7 +22,10 @@ public class TenderService {
     }
 
     private int calculatePageCount(SearchFormAttribute attribute, SearchResult result) {
-        return ((int) Math.ceil((double) result.getTotalCount() / attribute.getPageSize()));
+        int totalPage = ((int) Math.ceil((double) result.getTotalCount() / attribute.getPageSize()));
+        if(totalPage > 100)
+            totalPage = 100;
+        return totalPage;
     }
 
 }
