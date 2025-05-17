@@ -23,6 +23,7 @@ public class HomeController {
 
         model.addAttribute("searchFormAttribute", searchFormAttribute);
         model.addAttribute("searchResult", new SearchResult());
+        model.addAttribute("subscribe", false);
         return "home";
     }
 }

@@ -68,6 +68,29 @@
 
         <button type="submit">Найти</button>
     </form>
+
+    <form th:action="@{/tracking/subscribe}" method="post" th:object="${searchFormAttribute}">
+        <input type="hidden" th:field="*{keyword}">
+        <input type="hidden" th:field="*{stages}">
+        <input type="hidden" th:field="*{types}">
+        <input type="hidden" th:field="*{pageSize}">
+        <input type="hidden"
+               th:if="${not #lists.isEmpty(searchResult.tenders)}"
+               name="purchaseCode"
+               th:value="${searchResult.tenders.get(0).purchaseCode}">
+
+        <label for="interval">Проверять каждые:</label>
+        <div class="form-group">
+            <select id="interval" name="interval">
+                <option value="1">1 мин</option>
+                <option value="2">2 мин</option>
+                <option value="5">5 мин</option>
+            </select>
+        </div>
+
+        <button type="submit" th:if="${not subscribe}" class="btn btn-primary">Отслеживать</button>
+        <span th:if="${subscribe}" class="text-success">✓ Уже отслеживается</span>
+    </form>
 </div>
 
 <br>
@@ -81,7 +104,7 @@
         <li>
             <a th:href="${tender.link}" th:text="${tender.purchaseObject}" target="_blank"></a>
             <span th:text="'Цена: ' + (${tender.price} != null ? ${tender.price} : '')"></span><br>
-            <span th:text="'Окончание подачи заявок: ' + (${tender.deadline} != null ? ${#temporals.format(tender.deadline, 'dd.MM.yyyy')} : '')"></span>
+            <span th:text="'Окончание подачи заявок: ' + (${tender.expirationDate()} != null ? ${#temporals.format(tender.expirationDate, 'dd.MM.yyyy')} : '')"></span>
         </li>
     </ul>
 

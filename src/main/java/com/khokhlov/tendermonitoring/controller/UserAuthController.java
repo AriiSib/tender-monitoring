@@ -27,11 +27,9 @@ public class UserAuthController {
     @PostMapping("/login")
     public String login(UserLoginDTO userDTO,
                         Model model) {
-
         // TODO: validation
         UserDTO user = userService.login(userDTO);
         model.addAttribute("user", user);
-
         return "redirect:/home";
     }
 
@@ -42,9 +40,7 @@ public class UserAuthController {
 
     @PostMapping("/registration")
     public String registration(UserCreateDTO user) {
-
         userService.registration(user);
-
         return "redirect:/auth/login";
     }
 

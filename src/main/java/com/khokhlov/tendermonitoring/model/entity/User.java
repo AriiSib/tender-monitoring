@@ -30,5 +30,4 @@ public class User {
     @UpdateTimestamp
     @Column(name = "last_update")
     private LocalDateTime updateAt;
-
 }

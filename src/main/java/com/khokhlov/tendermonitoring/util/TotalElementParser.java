@@ -12,7 +12,6 @@ public class TotalElementParser {
             String numberOnly = text.replaceAll("[^\\d]", "");
             return Integer.parseInt(numberOnly);
         }
-
         return 0;
     }
 }

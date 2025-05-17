@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.khokhlov.tendermonitoring.consts.Consts.ZAKUPKI_GOV_URL;
+
 public class TenderParser {
 
     public static SearchResult parseTenders(String url) {
@@ -30,14 +32,15 @@ public class TenderParser {
 
             for (Element entry : entries) {
                 String title = entry.select(".registry-entry__header-top__title").text();
-                String link = entry.select("div.registry-entry__header-mid__number a").attr("href");
-                String fullLink = "https://zakupki.gov.ru" + link;
+                String link = ZAKUPKI_GOV_URL + entry.select("div.registry-entry__header-mid__number a").attr("href");
                 String regNumber = entry.select("div.registry-entry__header-mid__number a").text().replaceAll("[^0-9]", "");
                 String stage = entry.select("div.registry-entry__header-mid__title.text-normal").text();
+                String rowPrice = entry.select(".price-block__value").text().trim();
+                String currency = rowPrice.substring(rowPrice.length() - 1);
 
-                LocalDate deadline = null;
+                LocalDate expirationDate = null;
                 try {
-                    deadline = DateParser.parseDate(entry.select(".data-block__title:contains(Окончание подачи заявок)")
+                    expirationDate = DateFormatter.parseDate(entry.select(".data-block__title:contains(Окончание подачи заявок)")
                             .first()
                             .nextElementSibling()
                             .text());
@@ -46,7 +49,7 @@ public class TenderParser {
 
                 LocalDate publicationDate = null;
                 try {
-                    publicationDate = DateParser.parseDate(entry.select(".data-block__title:contains(Размещено)")
+                    publicationDate = DateFormatter.parseDate(entry.select(".data-block__title:contains(Размещено)")
                             .first()
                             .nextElementSibling()
                             .text());
@@ -55,7 +58,7 @@ public class TenderParser {
 
                 LocalDate updatedDate = null;
                 try {
-                    updatedDate = DateParser.parseDate(entry.select(".data-block__title:contains(Обновлено)")
+                    updatedDate = DateFormatter.parseDate(entry.select(".data-block__title:contains(Обновлено)")
                             .first()
                             .nextElementSibling()
                             .text());
@@ -64,7 +67,7 @@ public class TenderParser {
 
                 BigDecimal price = null;
                 try {
-                    price = PriceParser.parsePrice(entry.select(".price-block__value").text());
+                    price = PriceParser.parsePrice(rowPrice);
                 } catch (Exception e) {
 
                 }
@@ -83,14 +86,15 @@ public class TenderParser {
 
                 TenderDTO tender = new TenderDTO(
                         title,
-                        fullLink,
+                        link,
                         purchaseObject,
                         stage,
                         purchaseObject,
                         price,
+                        currency,
                         publicationDate,
                         updatedDate,
-                        deadline,
+                        expirationDate,
                         regNumber,
                         customer
                 );

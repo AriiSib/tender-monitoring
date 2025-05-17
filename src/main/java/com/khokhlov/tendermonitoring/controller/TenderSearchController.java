@@ -21,7 +21,7 @@ public class TenderSearchController {
         SearchResult result = tenderService.searchTenders(attribute);
         model.addAttribute("searchFormAttribute", attribute);
         model.addAttribute("searchResult", result);
-
+        model.addAttribute("subscribe", false);
         return "home";
     }
 

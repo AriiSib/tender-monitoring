@@ -19,5 +19,4 @@ public class PriceParser {
             throw new IllegalArgumentException("Failed to parse the price: " + rawPrice, e);
         }
     }
-
 }

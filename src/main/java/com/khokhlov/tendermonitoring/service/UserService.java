@@ -17,14 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
+    //    private final PasswordEncoder passwordEncoder;
     private final UserMapper mapper;
 
     public UserDTO login(UserLoginDTO userDTO) {
         User user = userRepository.findByUsername(userDTO.username())
                 .orElseThrow(() -> new RuntimeException("User with username \"" + userDTO.username() + "\" does not exist"));
 
-        if(!user.getPassword().equals(userDTO.password())) {
+        if (!user.getPassword().equals(userDTO.password())) {
             throw new RuntimeException("Wrong password");
         }
 
