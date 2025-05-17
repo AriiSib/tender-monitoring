@@ -7,6 +7,7 @@ import com.khokhlov.tendermonitoring.model.entity.SearchResult;
 import com.khokhlov.tendermonitoring.model.entity.TrackedKeyword;
 import com.khokhlov.tendermonitoring.service.DynamicMonitoringService;
 import com.khokhlov.tendermonitoring.service.RssMonitorService;
+import com.khokhlov.tendermonitoring.service.TenderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,14 +21,13 @@ public class TrackingController {
 
     private final RssMonitorService rssMonitorService;
     private final DynamicMonitoringService dynamicMonitoringService;
+    private final TenderService tenderService;
 
     @PostMapping("/tracking/subscribe")
     public String subscribe(@ModelAttribute("trackingAttributeDTO") TrackingAttributeDTO attribute,
                             @ModelAttribute("searchFormAttribute") SearchFormAttribute searchFormAttribute,
-                            @ModelAttribute("searchResult") SearchResult searchResult,
                             @SessionAttribute("user") UserDTO user,
                             Model model) {
-
         TrackedKeyword keyword = rssMonitorService.startMonitoring(user, attribute);
 
         if (keyword != null) {
@@ -37,8 +37,10 @@ public class TrackingController {
             model.addAttribute("subscribe", false);
         }
 
+        SearchResult result = tenderService.searchTenders(searchFormAttribute);
+
         model.addAttribute("searchFormAttribute", searchFormAttribute);
-        model.addAttribute("searchResult", searchResult);
+        model.addAttribute("searchResult", result);
         model.addAttribute("trackingKeyword", attribute.keyword());
         return "home";
     }

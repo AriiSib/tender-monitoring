@@ -24,5 +24,4 @@ public class TenderSearchController {
         model.addAttribute("subscribe", false);
         return "home";
     }
-
 }
