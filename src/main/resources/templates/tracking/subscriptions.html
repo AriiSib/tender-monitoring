@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои подписки</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+    <a class="navbar-brand" th:href="@{/home}">
+        <img th:src="@{/images/logo.png}" alt="Tender monitoring" width="30" height="24"
+             class="d-inline-block align-text-top">Tender Monitoring
+    </a>
+    <div class="ms-auto">
+        <a th:href="@{/home}" class="btn btn-outline-primary me-2">На главную</a>
+        <form th:action="@{/auth/logout}" method="post" class="d-inline">
+            <button class="btn btn-outline-danger">Выйти</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2>Мои подписки</h2>
+
+    <div th:if="${#lists.isEmpty(subscriptions)}" class="alert alert-info">
+        У вас пока нет активных подписок.
+    </div>
+
+    <table class="table table-bordered table-striped" th:if="${!#lists.isEmpty(subscriptions)}">
+        <thead>
+        <tr>
+            <th>Ключевое слово</th>
+            <th>Интервал (мин)</th>
+            <th>Последнее появление</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="subscription : ${subscriptions}">
+            <td th:text="${subscription.keyword}"></td>
+
+            <td>
+                <form th:action="@{'/tracking/' + ${subscription.id} + '/update'}" method="post" class="d-flex">
+                    <input type="number" name="interval" th:value="${subscription.interval}" min="1"
+                           class="form-control form-control-sm me-2" required/>
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Изменить</button>
+                </form>
+            </td>
+
+            <td th:text="${subscription.lastUpdateFoundAt != null ? #temporals.format(subscription.lastUpdateFoundAt, 'dd.MM.yyyy HH:mm') : '-'}"></td>
+
+            <td>
+                <span th:text="${subscription.active ? 'Активно' : 'Приостановлено'}"
+                      th:classappend="${subscription.active ? 'text-success' : 'text-muted'}"></span>
+            </td>
+
+            <td class="d-flex gap-2">
+                <form th:if="${subscription.active}" th:action="@{'/tracking/' + ${subscription.id} + '/pause'}"
+                      method="post">
+                    <button class="btn btn-sm btn-warning">Пауза</button>
+                </form>
+                <form th:unless="${subscription.active}" th:action="@{'/tracking/' + ${subscription.id} + '/resume'}"
+                      method="post">
+                    <button class="btn btn-sm btn-success">Возобновить</button>
+                </form>
+                <form th:action="@{'/tracking/' + ${subscription.id} + '/delete'}" method="post">
+                    <button class="btn btn-sm btn-danger">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

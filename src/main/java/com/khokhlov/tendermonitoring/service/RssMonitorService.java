@@ -1,10 +1,7 @@
 package com.khokhlov.tendermonitoring.service;
 
 import com.khokhlov.tendermonitoring.mapper.TenderMapper;
-import com.khokhlov.tendermonitoring.model.dto.RssItemDTO;
-import com.khokhlov.tendermonitoring.model.dto.SpecifiedDate;
-import com.khokhlov.tendermonitoring.model.dto.TrackingAttributeDTO;
-import com.khokhlov.tendermonitoring.model.dto.UserDTO;
+import com.khokhlov.tendermonitoring.model.dto.*;
 import com.khokhlov.tendermonitoring.model.entity.TrackedKeyword;
 import com.khokhlov.tendermonitoring.model.entity.TrackedTender;
 import com.khokhlov.tendermonitoring.model.entity.User;
@@ -38,9 +35,10 @@ public class RssMonitorService {
         User user = userRepository.getUsersByIdAndUsername(userDTO.id(), userDTO.username());
         if (trackedKeywordRepository.existsByUserAndKeyword(user, attribute.keyword())) {
             throw new RuntimeException("Keyword already tracked");
-        } else if (attribute.keyword() == null || attribute.keyword().isBlank()) {
-            throw new RuntimeException("Keyword cannot be empty");
         }
+//        else if (attribute.keyword() == null || attribute.keyword().isBlank()) {
+//            throw new RuntimeException("Keyword cannot be empty");
+//        }
         TrackedKeyword keyword = new TrackedKeyword();
         keyword.setUser(user);
         keyword.setKeyword(attribute.keyword());
@@ -68,19 +66,6 @@ public class RssMonitorService {
 
     }
 
-    private List<RssItemDTO> filterByPurchaseCode(TrackingAttributeDTO attribute, TrackedKeyword keyword) {
-        return checkFeeds(keyword)
-                .stream()
-                .filter(item -> item.purchaseCode().equals(attribute.purchaseCode()))
-                .toList();
-    }
-
-    private List<RssItemDTO> filterAfterLastPublished(List<RssItemDTO> items, ZonedDateTime lastDate) {
-        return items.stream()
-                .takeWhile(item -> item.publishedDate().isAfter(lastDate))
-                .toList();
-    }
-
     private void track(TrackedKeyword keyword, List<RssItemDTO> newItems) {
         List<TrackedTender> trackedTenders = new ArrayList<>();
         for (RssItemDTO item : newItems) {
@@ -100,5 +85,18 @@ public class RssMonitorService {
             keyword.setLastPublishedDate(newItems.getFirst().publishedDate());
             trackedKeywordRepository.save(keyword);
         }
+    }
+
+    private List<RssItemDTO> filterByPurchaseCode(TrackingAttributeDTO attribute, TrackedKeyword keyword) {
+        return checkFeeds(keyword)
+                .stream()
+                .filter(item -> item.purchaseCode().equals(attribute.purchaseCode()))
+                .toList();
+    }
+
+    private List<RssItemDTO> filterAfterLastPublished(List<RssItemDTO> items, ZonedDateTime lastDate) {
+        return items.stream()
+                .takeWhile(item -> item.publishedDate().isAfter(lastDate))
+                .toList();
     }
 }

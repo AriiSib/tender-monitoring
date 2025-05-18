@@ -11,12 +11,11 @@
 
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-
+        <a class="navbar-brand" th:href="@{/home}">
             <img th:src="@{/images/logo.png}" alt="Tender monitoring" width="30" height="24"
-                 class="d-inline-block align-text-top">
-            Tender Monitoring
+                 class="d-inline-block align-text-top">Tender Monitoring
         </a>
+        <a th:href="@{/tracking}" class="btn btn-outline-secondary">Мои подписки</a>
         <div class="d-flex align-items-center">
             <span class="navbar-text me-3" th:text="${session.user.username}">username</span>
             <form th:action="@{/auth/logout}" method="post">
