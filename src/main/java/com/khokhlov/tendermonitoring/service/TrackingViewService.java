@@ -1,14 +1,18 @@
 package com.khokhlov.tendermonitoring.service;
 
 import com.khokhlov.tendermonitoring.model.dto.TrackedKeywordViewDTO;
+import com.khokhlov.tendermonitoring.model.dto.TrackedTenderViewDTO;
 import com.khokhlov.tendermonitoring.model.dto.UserDTO;
 import com.khokhlov.tendermonitoring.model.entity.TrackedKeyword;
+import com.khokhlov.tendermonitoring.model.entity.TrackedTender;
 import com.khokhlov.tendermonitoring.model.entity.User;
 import com.khokhlov.tendermonitoring.repository.TrackedKeywordRepository;
+import com.khokhlov.tendermonitoring.repository.TrackedTenderRepository;
 import com.khokhlov.tendermonitoring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -16,6 +20,7 @@ import java.util.List;
 public class TrackingViewService {
 
     private final TrackedKeywordRepository trackedKeywordRepository;
+    private final TrackedTenderRepository trackedTenderRepository;
     private final DynamicMonitoringService dynamicMonitoringService;
     private final UserRepository userRepository;
 
@@ -32,6 +37,23 @@ public class TrackingViewService {
                         kw.getLastUpdateFoundAt(),
                         dynamicMonitoringService.isTracking(kw.getId())
                 ))
+                .toList();
+    }
+
+    public List<TrackedTenderViewDTO> getNewTendersForUser(UserDTO userDTO) {
+        User user = userRepository.getUsersByIdAndUsername(userDTO.id(), userDTO.username());
+        List<TrackedTender> tenders = trackedTenderRepository.findAllForUser(user);
+
+        return tenders.stream()
+                .map(tender -> new TrackedTenderViewDTO(
+                        tender.getTrackedKeyword().getKeyword(),
+                        tender.getTitle(),
+                        tender.getLink(),
+                        tender.getPrice(),
+                        tender.getExpirationDate(),
+                        tender.getPublishedDate()
+                ))
+                .sorted(Comparator.comparing(TrackedTenderViewDTO::publishedDate).reversed())
                 .toList();
     }
 

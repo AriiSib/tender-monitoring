@@ -15,11 +15,12 @@
             <img th:src="@{/images/logo.png}" alt="Tender monitoring" width="30" height="24"
                  class="d-inline-block align-text-top">Tender Monitoring
         </a>
+        <a th:href="@{/new-tenders}" class="btn btn-outline-success">Новые тендеры</a>
         <a th:href="@{/tracking}" class="btn btn-outline-secondary">Мои подписки</a>
         <div class="d-flex align-items-center">
             <span class="navbar-text me-3" th:text="${session.user.username}">username</span>
             <form th:action="@{/auth/logout}" method="post">
-                <button class="btn btn-outline-danger" type="submit">Logout</button>
+                <button class="btn btn-outline-danger" type="submit">Выйти</button>
             </form>
         </div>
     </div>

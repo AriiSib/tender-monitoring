@@ -14,9 +14,10 @@
              class="d-inline-block align-text-top">Tender Monitoring
     </a>
     <div class="ms-auto">
+        <a th:href="@{/new-tenders}" class="btn btn-outline-success">Новые тендеры</a>
         <a th:href="@{/home}" class="btn btn-outline-primary me-2">На главную</a>
-        <form th:action="@{/auth/logout}" method="post" class="d-inline">
-            <button class="btn btn-outline-danger">Выйти</button>
+        <form th:action="@{/auth/logout}" method="post">
+            <button class="btn btn-outline-danger" type="submit">Выйти</button>
         </form>
     </div>
 </nav>
