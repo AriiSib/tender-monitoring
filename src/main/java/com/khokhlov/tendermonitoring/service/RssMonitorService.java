@@ -8,6 +8,7 @@ import com.khokhlov.tendermonitoring.model.entity.User;
 import com.khokhlov.tendermonitoring.repository.TrackedKeywordRepository;
 import com.khokhlov.tendermonitoring.repository.TrackedTenderRepository;
 import com.khokhlov.tendermonitoring.repository.UserRepository;
+import com.khokhlov.tendermonitoring.telegram.service.TelegramNotificationService;
 import com.khokhlov.tendermonitoring.util.RssParser;
 import com.khokhlov.tendermonitoring.util.RssUrlBuilder;
 import com.khokhlov.tendermonitoring.util.TenderCardParser;
@@ -27,6 +28,7 @@ public class RssMonitorService {
 
     private final TrackedKeywordRepository trackedKeywordRepository;
     private final TrackedTenderRepository trackedTenderRepository;
+    private final TelegramNotificationService notificationService;
     private final TenderMapper tenderMapper;
     private final UserRepository userRepository;
 
@@ -63,11 +65,12 @@ public class RssMonitorService {
             }
             return newItems;
         }
-
     }
 
     private void track(TrackedKeyword keyword, List<RssItemDTO> newItems) {
         List<TrackedTender> trackedTenders = new ArrayList<>();
+
+
         for (RssItemDTO item : newItems) {
             SpecifiedDate specifiedDate = TenderCardParser.parseDate(item.link());
             //todo: возможна проблема в сравнении с ZonedDateTime.now()
@@ -79,6 +82,12 @@ public class RssMonitorService {
             tender.setTrackedKeyword(keyword);
             trackedTenders.add(tender);
         }
+
+        Long chatId = keyword.getUser().getTelegramChatId();
+        if (chatId != null) {
+            notificationService.notifyUser(trackedTenders, chatId);
+        }
+
         trackedTenderRepository.saveAll(trackedTenders);
 
         if (!newItems.isEmpty()) {

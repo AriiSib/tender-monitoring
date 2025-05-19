@@ -23,9 +23,10 @@ public class DynamicMonitoringService {
 
     public void schedule(TrackedKeyword keyword) {
         Runnable task = () -> rssMonitorService.checkFeeds(keyword);
-        Date firstRun = Date.from(Instant.now().plus(Duration.ofMinutes(keyword.getCheckedIntervalMinutes())));
+//        Date firstRun = Date.from(Instant.now().plus(Duration.ofMinutes(keyword.getCheckedIntervalMinutes())));
 
-        ScheduledFuture<?> future = scheduler.scheduleWithFixedDelay(task, firstRun.toInstant(), Duration.ofMinutes(keyword.getCheckedIntervalMinutes()));
+//        ScheduledFuture<?> future = scheduler.scheduleWithFixedDelay(task, firstRun.toInstant(), Duration.ofMinutes(keyword.getCheckedIntervalMinutes()));
+        ScheduledFuture<?> future = scheduler.scheduleWithFixedDelay(task, Duration.ofMinutes(keyword.getCheckedIntervalMinutes()));
         runningTasks.put(keyword.getId(), future);
     }
 

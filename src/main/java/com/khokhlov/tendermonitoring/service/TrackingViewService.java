@@ -29,13 +29,13 @@ public class TrackingViewService {
         List<TrackedKeyword> keywords = trackedKeywordRepository.findAllByUser(user);
 
         return keywords.stream()
-                .map(kw -> new TrackedKeywordViewDTO(
-                        kw.getId(),
-                        kw.getKeyword(),
-                        kw.getCheckedIntervalMinutes(),
-                        kw.getLastPublishedDate(),
-                        kw.getLastUpdateFoundAt(),
-                        dynamicMonitoringService.isTracking(kw.getId())
+                .map(keyword -> new TrackedKeywordViewDTO(
+                        keyword.getId(),
+                        keyword.getKeyword(),
+                        keyword.getCheckedIntervalMinutes(),
+                        keyword.getLastPublishedDate(),
+                        keyword.getLastUpdateFoundAt(),
+                        dynamicMonitoringService.isTracking(keyword.getId())
                 ))
                 .toList();
     }

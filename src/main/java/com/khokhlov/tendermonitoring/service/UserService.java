@@ -41,4 +41,12 @@ public class UserService {
 //        userToSave.setPassword(passwordEncoder.encode(createDTO.getPassword()));
         userRepository.save(userToSave);
     }
+
+    @Transactional
+    public void updateTelegramChatId(Long userId, Long chatId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        user.setTelegramChatId(chatId);
+        userRepository.save(user);
+    }
 }
