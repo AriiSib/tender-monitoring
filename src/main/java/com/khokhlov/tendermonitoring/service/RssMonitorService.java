@@ -38,9 +38,6 @@ public class RssMonitorService {
         if (trackedKeywordRepository.existsByUserAndKeyword(user, attribute.keyword())) {
             throw new RuntimeException("Keyword already tracked");
         }
-//        else if (attribute.keyword() == null || attribute.keyword().isBlank()) {
-//            throw new RuntimeException("Keyword cannot be empty");
-//        }
         TrackedKeyword keyword = new TrackedKeyword();
         keyword.setUser(user);
         keyword.setKeyword(attribute.keyword());

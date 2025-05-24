@@ -22,6 +22,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @CreationTimestamp
     @Column(name = "registered", updatable = false, nullable = false)
