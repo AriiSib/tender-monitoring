@@ -1,17 +1,12 @@
-body {
-    min-height: 100vh;
-}
-
-section#page-content {
-    min-height: calc(100vh - 164px);
-}
-
-.logo {
-    background-image: url("/images/logo.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-
-    min-height: 250px;
-}
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+:root{--accent:#19c37d;--bg:#f8f9fa;--text:#212529;}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;background-color:var(--bg);color:var(--text);}
+.navbar-brand img{border-radius:.25rem;}
+.navbar-nav .nav-link.active,.navbar-nav .show>.nav-link,.btn-primary{background-color:var(--accent);border-color:var(--accent);color:#fff;}
+.btn-primary:hover,.btn-primary:focus{background-color:#159963;border-color:#159963;}
+.card{border:none;border-radius:1rem;}
+.shadow-sm{box-shadow:0 0.5rem 1rem rgba(0,0,0,.05)!important;}
+.form-check-input:checked{background-color:var(--accent);border-color:var(--accent);}
+.list-group-item{border:none;border-bottom:1px solid #e9ecef;}
+.pagination .page-link{color:var(--accent);}
+.pagination .active>.page-link,.pagination .page-link.active{background-color:var(--accent);border-color:var(--accent);color:#fff;}

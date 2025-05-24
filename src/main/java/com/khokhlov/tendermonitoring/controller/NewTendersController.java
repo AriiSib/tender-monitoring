@@ -23,6 +23,6 @@ public class NewTendersController {
     public String showNewTenders(@SessionAttribute("user") UserDTO userDTO, Model model) {
         List<TrackedTenderViewDTO> tenders = trackingViewService.getNewTendersForUser(userDTO);
         model.addAttribute("tenders", tenders);
-        return "tenders/tenders";
+        return "tenders/new-tenders";
     }
 }
