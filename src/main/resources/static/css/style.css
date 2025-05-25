@@ -107,3 +107,30 @@ footer {
     font-size: .875rem;
     color: #6c757d;
 }
+
+.user-icon img {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.logo-text {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: 0.03em;
+    color: #1976d2;
+    text-decoration: none;
+    display: inline-block;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.logo-text span {
+    color: #374151;
+    font-weight: 400;
+}
+
+.logo-text:hover, .logo-text:focus {
+    color: #1976d2;
+    text-decoration: underline;
+}
