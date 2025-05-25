@@ -5,6 +5,7 @@
     --accent-red-light: rgba(229, 57, 53, 0.12);
     --bg: #fafafa;
 }
+
 .nav-btn {
     display: inline-block;
     padding: .45rem .9rem;
@@ -16,11 +17,13 @@
     transition: background .2s ease, color .2s ease;
     text-decoration: none;
 }
+
 .nav-btn:hover,
 .nav-btn:focus {
     background: var(--accent-light);
     color: var(--accent);
 }
+
 .logout-btn {
     color: #374151;
     background: transparent;
@@ -28,44 +31,79 @@
     border-radius: .5rem;
     transition: background .2s, color .2s;
 }
+
 .logout-btn:hover,
 .logout-btn:focus {
     background: var(--accent-red-light);
     color: var(--accent-red);
 }
 
-body{background:var(--bg);font-family:'Inter',system-ui,sans-serif;}
+body {
+    background: var(--bg);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
 .tender-card,
-.search-card{            /* <- добавь класс .search-card на форму поиска */
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:1rem;
-    padding:1.5rem;
-    margin-bottom:1.25rem;
-}
-.tender-card{border:1px solid #e5e7eb;border-radius:1rem;}
-.tender-card a{color:#0056d2;text-decoration:none;}
-.tender-card a:hover{text-decoration:underline;}
-.badge-stage{font-weight:600;background:transparent;color:#000;}
-.mark{background:#fff89c;}
-
-.pagination .btn-light{border:1px solid #e5e7eb;}
-.pagination .btn-primary{background:var(--accent);border:none;}
-
-/* Sticky footer */
-html,body{height:100%;}
-body{
-    display:flex;
-    flex-direction:column;
-    min-height:100vh;   /* 100% высоты окна */
-}
-main{flex:1 0 auto;}  /* растягивается, выдавливая футер вниз */
-footer{
-    flex-shrink:0;
-    background:#f8f9fa;
-    padding:1rem 0;
-    text-align:center;
-    font-size:.875rem;
-    color:#6c757d;
+.search-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
 }
 
+.tender-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+}
+
+.tender-card a {
+    color: #0056d2;
+    text-decoration: none;
+}
+
+.tender-card a:hover {
+    text-decoration: underline;
+}
+
+.badge-stage {
+    font-weight: 600;
+    background: transparent;
+    color: #000;
+}
+
+.mark {
+    background: #fff89c;
+}
+
+.pagination .btn-light {
+    border: 1px solid #e5e7eb;
+}
+
+.pagination .btn-primary {
+    background: var(--accent);
+    border: none;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+    background: #f8f9fa;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: .875rem;
+    color: #6c757d;
+}

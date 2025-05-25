@@ -4,27 +4,27 @@
 <body class="d-flex flex-column min-vh-100">
 <main class="flex-grow-1">
     <div class="container py-5">
-        <h2 class="text-center mb-4">Sign Up</h2>
+        <h2 class="text-center mb-4">Регистрация</h2>
 
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 col-lg-4">
                 <form th:action="@{/auth/registration}" method="post" th:object="${user}" class="card p-4 shadow-sm">
                     <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
+                        <label for="username" class="form-label">Имя пользователя</label>
                         <input type="text" class="form-control" id="username" name="username" th:value="${username}"
                                required>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label">Пароль</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <div class="mb-3">
-                        <label for="repeat-password" class="form-label">Repeat password</label>
+                        <label for="repeat-password" class="form-label">Повторите пароль</label>
                         <input type="password" class="form-control" id="repeat-password" name="repeatPassword" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 mt-2">Sign Up</button>
-                    <p class="mt-3 text-center small">Already have an account?
-                        <a th:href="@{/auth/login}">Sign in here</a>
+                    <button type="submit" class="btn btn-primary w-100 mt-2">Зарегистрироваться</button>
+                    <p class="mt-3 text-center small">Уже есть аккаунт?
+                        <a th:href="@{/auth/login}">Войти в систему</a>
                     </p>
                 </form>
             </div>

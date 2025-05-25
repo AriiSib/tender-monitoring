@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head(title='Главная')}"></head>
+<head th:replace="~{fragments/head :: head(title='Поиск')}"></head>
 <body>
 <main class="flex-grow-1">
     <div th:replace="~{fragments/navbar :: navbar}"></div>
@@ -63,13 +63,12 @@
                         </select>
                     </div>
 
-                    <!-- interval + subscribe / search buttons -->
                     <div class="col-12 d-flex flex-wrap gap-2 align-items-end">
                         <button type="submit" class="btn btn-primary">Найти</button>
 
                         <div class="ms-auto d-flex flex-wrap gap-2 align-items-end"
                              th:if="${not #lists.isEmpty(searchResult.tenders)}">
-                            <div class="">
+                            <div class="" th:if="${not subscribe}">
                                 <label for="interval" class="form-label small mb-1">Проверять каждые</label>
                                 <select id="interval" name="interval" class="form-select form-select-sm">
                                     <option value="1">1 мин</option>
@@ -78,20 +77,17 @@
                                 </select>
                             </div>
 
-                            <!-- скрытые поля для отслеживания -->
-                            <input type="hidden" th:field="*{keyword}">
                             <input type="hidden" th:field="*{stages}">
                             <input type="hidden" th:field="*{types}">
                             <input type="hidden" th:field="*{pageSize}">
                             <input type="hidden" name="purchaseCode" th:if="${not #lists.isEmpty(searchResult.tenders)}"
                                    th:value="${searchResult.tenders.get(0).purchaseCode}">
 
-                            <!-- subscribe button / status -->
                             <button type="submit" class="btn btn-outline-success"
                                     th:if="${not subscribe}"
                                     th:attr="formaction=@{/tracking/subscribe}">Отслеживать
                             </button>
-                            <span th:if="${subscribe}" class="text-success fw-medium">✓ Уже отслеживается</span>
+                            <span th:if="${subscribe}" class="text-success fw-medium">✓ Отслеживается</span>
                         </div>
                     </div>
                 </form>

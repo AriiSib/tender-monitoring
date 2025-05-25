@@ -10,4 +10,6 @@ public interface TrackedKeywordRepository extends CrudRepository<TrackedKeyword,
     boolean existsByUserAndKeyword(User user, String keyword);
 
     List<TrackedKeyword> findAllByUser(User user);
+
+    List<TrackedKeyword> findAllByUserId(Long id);
 }
