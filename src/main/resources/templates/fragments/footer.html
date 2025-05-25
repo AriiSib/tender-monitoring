@@ -1,5 +1,5 @@
 <th:block th:fragment="footer">
-    <footer class="mt-auto bg-light text-center py-3 small text-muted">
-        © 2025 Tender Monitoring
+    <footer class="py-4 text-center text-muted small">
+        &copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span> Tender Monitoring
     </footer>
 </th:block>

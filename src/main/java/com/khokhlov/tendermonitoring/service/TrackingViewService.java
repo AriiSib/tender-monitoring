@@ -49,9 +49,16 @@ public class TrackingViewService {
                         tender.getTrackedKeyword().getKeyword(),
                         tender.getTitle(),
                         tender.getLink(),
+                        tender.getProcurementLaws(),
+                        tender.getStage(),
+                        tender.getPurchaseObject(),
                         tender.getPrice(),
+                        tender.getCurrency(),
+                        tender.getPublishedDate(),
+                        tender.getPostedDate(),
                         tender.getExpirationDate(),
-                        tender.getPublishedDate()
+                        tender.getPurchaseCode(),
+                        tender.getAuthor()
                 ))
                 .sorted(Comparator.comparing(TrackedTenderViewDTO::publishedDate).reversed())
                 .toList();

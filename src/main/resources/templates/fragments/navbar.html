@@ -1,20 +1,22 @@
 <th:block th:fragment="navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
         <a class="navbar-brand" th:href="@{/home}">
-            <img th:src="@{/images/logo.png}" alt="Tender monitoring" width="30" height="24" class="d-inline-block align-text-top">
+            <img th:src="@{/images/logo.png}" alt="Tender monitoring" width="30" height="24"
+                 class="d-inline-block align-text-top">
             Tender Monitoring
         </a>
 
         <!-- Показываем правый блок только если пользователь залогинен -->
         <div class="ms-auto" th:if="${session.user != null}">
-            <a th:href="@{/new-tenders}" class="btn btn-outline-success me-2">Новые тендеры</a>
-            <a th:href="@{/tracking}" class="btn btn-outline-secondary me-2">Мои подписки</a>
-            <a th:if="${session.user.role?.name() == 'ADMIN'}" th:href="@{/admin}" class="btn btn-outline-warning me-2">Админка</a>
+            <a th:href="@{/home}" class="nav-btn">Главная</a>
+            <a th:href="@{/new-tenders}" class="nav-btn">Новые тендеры</a>
+            <a th:href="@{/tracking}" class="nav-btn">Мои подписки</a>
+            <a th:if="${session.user.role?.name() == 'ADMIN'}" th:href="@{/admin}" class="nav-btn">Админка</a>
 
-            <span class="navbar-text me-3" th:text="${session.user.username}">username</span>
+<!--            <span class="navbar-text me-3" th:text="${session.user.username}">username</span>-->
 
             <form th:action="@{/auth/logout}" method="post" class="d-inline">
-                <button class="btn btn-outline-danger" type="submit">Выйти</button>
+                <button class="nav-btn logout-btn" type="submit">Выйти</button>
             </form>
         </div>
     </nav>

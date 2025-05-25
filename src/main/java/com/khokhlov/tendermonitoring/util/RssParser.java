@@ -32,7 +32,7 @@ public class RssParser {
             SyndFeed feed = new SyndFeedInput().build(reader);
 
             for (SyndEntry entry : feed.getEntries()) {
-                String title = entry.getTitle();
+                String title = entry.getTitle().replaceAll(" №\\d+", "");
                 String link = ZAKUPKI_GOV_URL + entry.getLink();
                 String purchaseCode = link.replaceAll(".*regNumber=(\\d+).*", "$1");
 
@@ -44,8 +44,8 @@ public class RssParser {
 
                 Document rssDescription = Jsoup.parse(description);
 
-                String procurementLaws = extractData(rssDescription, "Закупки по:");
-                String stage = extractData(rssDescription, "Этап закупки:");
+                String procurementLaws = extractData(rssDescription, "Размещение выполняется по:");
+                String stage = extractData(rssDescription, "Этап размещения:");
                 String purchaseObject = extractData(rssDescription, "Наименование объекта закупки:");
                 BigDecimal price = PriceParser.parsePrice(extractData(rssDescription, "Начальная цена контракта:"));
                 String currency = extractData(rssDescription, "Валюта:");
