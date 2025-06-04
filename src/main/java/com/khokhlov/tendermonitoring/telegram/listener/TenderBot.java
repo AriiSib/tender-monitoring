@@ -1,4 +1,4 @@
-package com.khokhlov.tendermonitoring.telegram.listner;
+package com.khokhlov.tendermonitoring.telegram.listener;
 
 import com.khokhlov.tendermonitoring.model.dto.UserDTO;
 import com.khokhlov.tendermonitoring.model.dto.UserLoginDTO;

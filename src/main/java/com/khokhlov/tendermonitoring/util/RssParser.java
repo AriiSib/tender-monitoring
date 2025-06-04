@@ -19,6 +19,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.khokhlov.tendermonitoring.consts.Consts.ZAKUPKI_GOV_URL;
 
@@ -32,9 +34,15 @@ public class RssParser {
             SyndFeed feed = new SyndFeedInput().build(reader);
 
             for (SyndEntry entry : feed.getEntries()) {
-                String title = entry.getTitle().replaceAll(" №\\d+", "");
+                String rowTitle = entry.getTitle();
+                String title = rowTitle.replaceAll(" №\\d+", "");
                 String link = ZAKUPKI_GOV_URL + entry.getLink();
-                String purchaseCode = link.replaceAll(".*regNumber=(\\d+).*", "$1");
+                String purchaseCode = null;
+                Pattern pattern = Pattern.compile("№(\\d+)");
+                Matcher matcher = pattern.matcher(rowTitle);
+                if (matcher.find()) {
+                    purchaseCode = matcher.group(1);
+                }
 
                 String description = entry.getDescription().getValue();
 

@@ -33,6 +33,5 @@ public class User {
     @Column(name = "last_update")
     private LocalDateTime updateAt;
 
-    @Column(unique = true)
     private Long telegramChatId;
 }

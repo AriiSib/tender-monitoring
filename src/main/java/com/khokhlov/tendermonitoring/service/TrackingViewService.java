@@ -45,6 +45,7 @@ public class TrackingViewService {
         List<TrackedTender> tenders = trackedTenderRepository.findAllForUser(user);
 
         return tenders.stream()
+//                .filter(tender -> !tender.isNotified())
                 .map(tender -> new TrackedTenderViewDTO(
                         tender.getTrackedKeyword().getKeyword(),
                         tender.getTitle(),

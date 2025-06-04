@@ -67,16 +67,18 @@ public class RssMonitorService {
     private void track(TrackedKeyword keyword, List<RssItemDTO> newItems) {
         List<TrackedTender> trackedTenders = new ArrayList<>();
 
-
         for (RssItemDTO item : newItems) {
             SpecifiedDate specifiedDate = TenderCardParser.parseDate(item.link());
-            //todo: возможна проблема в сравнении с ZonedDateTime.now()
-            if (specifiedDate.expirationDate() == null || specifiedDate.expirationDate().isBefore(ZonedDateTime.now())) {
-                continue;
+            //todo: возможна проблема в сравнении с ZonedDateTime.now() и если continue - то мониторинг все-равно продолжается
+//            if (specifiedDate.expirationDate() == null || specifiedDate.expirationDate().isBefore(ZonedDateTime.now())) {
+//                continue;
+//            }
+            TrackedTender tender = null;
+            if (specifiedDate != null) {
+                tender = tenderMapper.toTrackedTender(item, specifiedDate);
             }
-
-            TrackedTender tender = tenderMapper.toTrackedTender(item, specifiedDate);
             tender.setTrackedKeyword(keyword);
+            tender.setNotified(true);
             trackedTenders.add(tender);
         }
 
@@ -89,8 +91,8 @@ public class RssMonitorService {
 
         if (!newItems.isEmpty()) {
             keyword.setLastPublishedDate(newItems.getFirst().publishedDate());
-            trackedKeywordRepository.save(keyword);
         }
+        trackedKeywordRepository.save(keyword);
     }
 
     private List<RssItemDTO> filterByPurchaseCode(TrackingAttributeDTO attribute, TrackedKeyword keyword) {

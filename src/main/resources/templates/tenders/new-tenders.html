@@ -10,7 +10,7 @@
         <h1 class="h4 mb-4">Новые тендеры</h1>
 
         <div th:if="${#lists.isEmpty(tenders)}"
-             class="alert alert-info">Пока новых тендеров нет.
+             class="alert alert-info">Пока новых тендеров нет
         </div>
 
         <div th:if="${!#lists.isEmpty(tenders)}" class="search-card">
@@ -61,12 +61,12 @@
                                 <div class="col-6 text-muted">Размещено</div>
                                 <div class="col-6"
                                      th:text="${tender.postedDate} != null ?
-                              ${#temporals.format(tender.postedDate,'dd.MM.yyyy')} : '-' ">
+                              ${#temporals.format(tender.postedDate,'dd.MM.yyyy HH:mm')} : '-' ">
                                 </div>
                                 <div class="col-6 text-muted">Окончание</div>
                                 <div class="col-6"
                                      th:text="${tender.expirationDate} != null ?
-                              ${#temporals.format(tender.expirationDate,'dd.MM.yyyy')} : '-' ">
+                              ${#temporals.format(tender.expirationDate,'dd.MM.yyyy HH:mm')} : '-' ">
                                 </div>
                             </div>
                         </div>

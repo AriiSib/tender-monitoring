@@ -87,7 +87,7 @@ public class TenderParser {
                 TenderDTO tender = new TenderDTO(
                         title,
                         link,
-                        purchaseObject,
+                        null,
                         stage,
                         purchaseObject,
                         price,

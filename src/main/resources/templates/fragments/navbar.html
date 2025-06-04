@@ -7,7 +7,7 @@
         <div class="ms-auto" th:if="${session.user != null}">
             <a th:href="@{/home}" class="nav-btn">Поиск</a>
             <a th:href="@{/new-tenders}" class="nav-btn">Новые тендеры</a>
-            <a th:href="@{/tracking}" class="nav-btn">Мои подписки</a>
+            <a th:href="@{/tracking}" class="nav-btn">Мониторинг</a>
             <a th:if="${session.user.role?.name() == 'ADMIN'}" th:href="@{/admin}" class="nav-btn">Админка</a>
 
             <span class="user-icon me-1"> <img src="/images/person-circle.svg" width="20" height="20"
