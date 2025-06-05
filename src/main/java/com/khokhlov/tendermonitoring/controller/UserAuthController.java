@@ -1,5 +1,6 @@
 package com.khokhlov.tendermonitoring.controller;
 
+import com.khokhlov.tendermonitoring.exception.auth.AuthenticationException;
 import com.khokhlov.tendermonitoring.model.dto.UserCreateDTO;
 import com.khokhlov.tendermonitoring.model.dto.UserDTO;
 import com.khokhlov.tendermonitoring.model.dto.UserLoginDTO;
@@ -23,17 +24,27 @@ public class UserAuthController {
     private final UserService userService;
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(Model model) {
+        model.addAttribute("user", new UserLoginDTO());
         return "auth/sign-in";
     }
 
     @PostMapping("/login")
-    public String login(UserLoginDTO userDTO,
+    public String login(@Validated @ModelAttribute("user") UserLoginDTO userLoginDTO,
+                        BindingResult bindingResult,
                         Model model) {
-        // TODO: validation
-        UserDTO user = userService.login(userDTO);
-        model.addAttribute("user", user);
-        return "redirect:/home";
+        if (bindingResult.hasErrors()) {
+            return "auth/sign-in";
+        }
+
+        try {
+            UserDTO user = userService.login(userLoginDTO);
+            model.addAttribute("user", user);
+            return "redirect:/home";
+        } catch (AuthenticationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "auth/sign-in";
+        }
     }
 
     @GetMapping("/registration")
