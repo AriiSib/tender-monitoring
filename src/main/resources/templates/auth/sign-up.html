@@ -9,18 +9,26 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 col-lg-4">
                 <form th:action="@{/auth/registration}" method="post" th:object="${user}" class="card p-4 shadow-sm">
+
+                    <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+                        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                    </div>
+
                     <div class="mb-3">
                         <label for="username" class="form-label">Имя пользователя</label>
-                        <input type="text" class="form-control" id="username" name="username" th:value="${username}"
+                        <input type="text" class="form-control" id="username" name="username" th:field="*{username}"
                                required>
+                        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger">Ошибка</span>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Пароль</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <input type="password" class="form-control" id="password" th:field="*{password}" required>
+                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label for="repeat-password" class="form-label">Повторите пароль</label>
-                        <input type="password" class="form-control" id="repeat-password" name="repeatPassword" required>
+                        <input type="password" class="form-control" id="repeat-password" th:field="*{repeatPassword}" required>
+                        <span th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}" class="text-danger"></span>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 mt-2">Зарегистрироваться</button>
                     <p class="mt-3 text-center small">Уже есть аккаунт?

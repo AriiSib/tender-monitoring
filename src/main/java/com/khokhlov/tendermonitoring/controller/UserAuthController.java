@@ -5,9 +5,12 @@ import com.khokhlov.tendermonitoring.model.dto.UserDTO;
 import com.khokhlov.tendermonitoring.model.dto.UserLoginDTO;
 import com.khokhlov.tendermonitoring.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -34,12 +37,17 @@ public class UserAuthController {
     }
 
     @GetMapping("/registration")
-    public String registrationPage() {
+    public String registrationPage(Model model) {
+        model.addAttribute("user", new UserCreateDTO());
         return "auth/sign-up";
     }
 
     @PostMapping("/registration")
-    public String registration(UserCreateDTO user) {
+    public String registration(@Validated @ModelAttribute("user") UserCreateDTO user,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "auth/sign-up";
+
         userService.registration(user);
         return "redirect:/auth/login";
     }
