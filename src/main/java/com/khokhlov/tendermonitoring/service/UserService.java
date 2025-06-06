@@ -10,30 +10,33 @@ import com.khokhlov.tendermonitoring.model.entity.Role;
 import com.khokhlov.tendermonitoring.model.entity.User;
 import com.khokhlov.tendermonitoring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    //    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final UserMapper mapper;
 
     public UserDTO login(UserLoginDTO userDTO) {
         User user = userRepository.findByUsername(userDTO.getUsername())
-                .orElseThrow(() -> new InvalidUsernameException("Пользователь с именем: \"" + userDTO.getUsername() + "\" не существует"));
+                .orElseThrow(() -> new InvalidUsernameException("User with username \"" + userDTO.getUsername() + "\" does not exist"));
 
         if (!user.getPassword().equals(userDTO.getPassword())) {
-            throw new InvalidPasswordException("Неверный пароль");
+            throw new InvalidPasswordException("Wrong password");
         }
 
-//        if (!passwordEncoder.matches(userDTO.password(), user.getPassword())) {
-//            throw new RuntimeException("Wrong password");
-//        }
+        if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Wrong password");
+        }
 
         return mapper.toDTO(user);
     }
@@ -42,15 +45,27 @@ public class UserService {
     public void registration(UserCreateDTO createDTO) {
         User userToSave = mapper.toEntity(createDTO);
         userToSave.setRole(Role.USER);
-//        userToSave.setPassword(passwordEncoder.encode(createDTO.getPassword()));
+        userToSave.setPassword(passwordEncoder.encode(createDTO.getPassword()));
         userRepository.save(userToSave);
     }
 
     @Transactional
     public void updateTelegramChatId(Long userId, Long chatId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new InvalidUsernameException("Пользователь не найден"));
+                .orElseThrow(() -> new InvalidUsernameException("User not found"));
         user.setTelegramChatId(chatId);
         userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
+                .password(user.getPassword())
+                .roles(user.getRole().getAuthority())
+                .build();
     }
 }
