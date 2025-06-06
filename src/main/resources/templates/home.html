@@ -19,21 +19,18 @@
             </div>
         </div>
 
-        <!-- ======== Поиск + отслеживание ======== -->
         <div class="card shadow-sm mb-4">
             <div class="card-body">
                 <h2 class="h4 mb-3">Поиск тендеров</h2>
                 <form th:action="@{/api/search}" method="post" th:object="${searchFormAttribute}" class="row gy-3">
                     <input type="hidden" th:field="*{currentPage}"/>
 
-                    <!-- keywords -->
                     <div class="col-12 col-lg-6">
                         <label for="keyword" class="form-label">Ключевые слова</label>
                         <input id="keyword" type="text" class="form-control" placeholder="Например: уборка помещений"
                                th:field="*{keyword}">
                     </div>
 
-                    <!-- types -->
                     <div class='col-md-6'>
                         <label class='form-label'>Тип торгов</label>
                         <div class='d-flex flex-wrap gap-3'>
@@ -47,7 +44,6 @@
                         </div>
                     </div>
 
-                    <!-- stages -->
                     <div class='col-md-6'>
                         <label class='form-label'>Этап</label>
                         <div class='d-flex flex-wrap gap-3'>
@@ -66,7 +62,6 @@
                         </div>
                     </div>
 
-                    <!-- page size -->
                     <div class="col-6 col-md-3 col-lg-2">
                         <label for="pageSize" class="form-label">На странице</label>
                         <select id="pageSize" class="form-select" th:field="*{pageSize}">
@@ -116,7 +111,6 @@
 
             <div class="tender-card mb-3" th:each="tender : ${searchResult.tenders}">
                 <div class="row g-0">
-                    <!-- left -->
                     <div class="col-lg-8 p-3">
                         <div class="text-muted small mb-1" th:text="${tender.title}">Закон</div>
 
@@ -135,7 +129,6 @@
                             <span th:text="${tender.author}"></span>
                         </div>
                     </div>
-                    <!-- right -->
                     <div class="col-lg-4 border-start p-3 d-flex flex-column gap-2">
                         <div>
                             <span class="text-muted small d-block">Начальная цена</span>

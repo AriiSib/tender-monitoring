@@ -1,12 +1,11 @@
 package com.khokhlov.tendermonitoring.controller;
 
-import com.khokhlov.tendermonitoring.exception.auth.AuthenticationException;
+import com.khokhlov.tendermonitoring.error.exception.auth.AuthenticationException;
 import com.khokhlov.tendermonitoring.model.dto.UserCreateDTO;
 import com.khokhlov.tendermonitoring.model.dto.UserDTO;
 import com.khokhlov.tendermonitoring.model.dto.UserLoginDTO;
 import com.khokhlov.tendermonitoring.service.UserService;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

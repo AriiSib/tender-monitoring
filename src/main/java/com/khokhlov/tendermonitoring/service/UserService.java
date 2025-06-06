@@ -1,7 +1,7 @@
 package com.khokhlov.tendermonitoring.service;
 
-import com.khokhlov.tendermonitoring.exception.auth.InvalidPasswordException;
-import com.khokhlov.tendermonitoring.exception.auth.InvalidUsernameException;
+import com.khokhlov.tendermonitoring.error.exception.auth.InvalidPasswordException;
+import com.khokhlov.tendermonitoring.error.exception.auth.InvalidUsernameException;
 import com.khokhlov.tendermonitoring.mapper.UserMapper;
 import com.khokhlov.tendermonitoring.model.dto.UserCreateDTO;
 import com.khokhlov.tendermonitoring.model.dto.UserDTO;
@@ -49,7 +49,7 @@ public class UserService {
     @Transactional
     public void updateTelegramChatId(Long userId, Long chatId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new InvalidUsernameException("Пользователь не найден"));
         user.setTelegramChatId(chatId);
         userRepository.save(user);
     }
