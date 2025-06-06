@@ -1,0 +1,11 @@
+ext {
+    versions = [
+            mapstruct    : '1.6.3',
+            selenium     : '4.30.0',
+            jsoup        : '1.19.1',
+            rome         : '2.1.0',
+            telegramBots : '8.3.0',
+            lombok       : '1.18.30',
+            junitPlatform: '1.10.0'
+    ]
+}
