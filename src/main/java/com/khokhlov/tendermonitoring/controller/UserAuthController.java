@@ -17,7 +17,7 @@ import org.springframework.web.bind.support.SessionStatus;
 @Controller
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@SessionAttributes({"user"})
+//@SessionAttributes({"user"})
 public class UserAuthController {
 
     private final UserService userService;
@@ -26,24 +26,6 @@ public class UserAuthController {
     public String loginPage(Model model) {
         model.addAttribute("user", new UserLoginDTO());
         return "auth/sign-in";
-    }
-
-    @PostMapping("/login")
-    public String login(@Validated @ModelAttribute("user") UserLoginDTO userLoginDTO,
-                        BindingResult bindingResult,
-                        Model model) {
-        if (bindingResult.hasErrors()) {
-            return "auth/sign-in";
-        }
-
-        try {
-            UserDTO user = userService.login(userLoginDTO);
-            model.addAttribute("user", user);
-            return "redirect:/home";
-        } catch (AuthenticationException e) {
-            model.addAttribute("error", e.getMessage());
-            return "auth/sign-in";
-        }
     }
 
     @GetMapping("/registration")
@@ -62,10 +44,4 @@ public class UserAuthController {
         return "redirect:/auth/login";
     }
 
-    @PostMapping("/logout")
-    public String logout(HttpSession session, SessionStatus status) {
-        status.setComplete();
-        session.invalidate();
-        return "redirect:/auth/login";
-    }
 }
