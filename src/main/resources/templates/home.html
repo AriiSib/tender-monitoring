@@ -133,7 +133,8 @@
                         <div>
                             <span class="text-muted small d-block">Начальная цена</span>
                             <span class="h6 mb-0"
-                                  th:text="${tender.price} != null ? ${#numbers.formatDecimal(tender.price,0,'COMMA',2,'POINT')} + ' ' + ${tender.currency} : '-' "></span>
+                                  th:text="${tender.price} != null ? ${#numbers.formatDecimal(tender.price,0,'COMMA',2,'POINT').replace(',', ' ')} + ' ' + ${tender.currency} : '-' ">
+                            </span>
                         </div>
                         <div class="small">
                             <div class="row g-1">
