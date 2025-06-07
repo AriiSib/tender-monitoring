@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/users/users-changelog.yaml
+  - include:
+      file: db/changelog/keywords/tracked-keywords-changelog.yaml
+  - include:
+      file: db/changelog/tenders/tenders-changelog.yaml
+  - include:
+      file: db/changelog/tenders/tracked-tenders-changelog.yml
