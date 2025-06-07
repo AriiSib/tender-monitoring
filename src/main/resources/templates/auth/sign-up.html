@@ -23,12 +23,15 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Пароль</label>
                         <input type="password" class="form-control" id="password" th:field="*{password}" required>
-                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span>
+                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                              class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label for="repeat-password" class="form-label">Повторите пароль</label>
-                        <input type="password" class="form-control" id="repeat-password" th:field="*{repeatPassword}" required>
-                        <span th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}" class="text-danger"></span>
+                        <input type="password" class="form-control" id="repeat-password" th:field="*{repeatPassword}"
+                               required>
+                        <span th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}"
+                              class="text-danger"></span>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 mt-2">Зарегистрироваться</button>
                     <p class="mt-3 text-center small">Уже есть аккаунт?

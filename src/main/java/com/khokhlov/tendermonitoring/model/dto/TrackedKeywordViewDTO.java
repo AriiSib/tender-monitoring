@@ -9,6 +9,6 @@ public record TrackedKeywordViewDTO(
         int interval,
         ZonedDateTime lastPublishedDate,
         LocalDateTime lastUpdateFoundAt,
-        boolean active  
+        boolean active
 ) {
 }

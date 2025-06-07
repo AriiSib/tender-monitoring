@@ -5,7 +5,6 @@ import com.khokhlov.tendermonitoring.model.entity.SearchFormAttribute;
 import com.khokhlov.tendermonitoring.model.entity.SearchResult;
 import com.khokhlov.tendermonitoring.repository.TrackedKeywordRepository;
 import com.khokhlov.tendermonitoring.service.TenderService;
-import com.khokhlov.tendermonitoring.service.TrackingViewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

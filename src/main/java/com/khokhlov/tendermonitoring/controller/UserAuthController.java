@@ -1,23 +1,18 @@
 package com.khokhlov.tendermonitoring.controller;
 
-import com.khokhlov.tendermonitoring.error.exception.auth.AuthenticationException;
 import com.khokhlov.tendermonitoring.model.dto.UserCreateDTO;
-import com.khokhlov.tendermonitoring.model.dto.UserDTO;
 import com.khokhlov.tendermonitoring.model.dto.UserLoginDTO;
 import com.khokhlov.tendermonitoring.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-//@SessionAttributes({"user"})
 public class UserAuthController {
 
     private final UserService userService;

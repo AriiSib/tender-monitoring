@@ -69,7 +69,6 @@ public class TenderBot implements SpringLongPollingBot, LongPollingSingleThreadU
 
     private void authorization(Long chatId, String text) {
         if (authorizedUsers.containsKey(chatId)) {
-//            send(chatId, "✅ Вы уже авторизованы.");
             return;
         }
 

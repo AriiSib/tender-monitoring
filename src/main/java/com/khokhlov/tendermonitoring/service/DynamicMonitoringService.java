@@ -6,8 +6,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.time.Instant;
-import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
@@ -23,9 +21,7 @@ public class DynamicMonitoringService {
 
     public void schedule(TrackedKeyword keyword) {
         Runnable task = () -> rssMonitorService.checkFeeds(keyword);
-//        Date firstRun = Date.from(Instant.now().plus(Duration.ofMinutes(keyword.getCheckedIntervalMinutes())));
 
-//        ScheduledFuture<?> future = scheduler.scheduleWithFixedDelay(task, firstRun.toInstant(), Duration.ofMinutes(keyword.getCheckedIntervalMinutes()));
         ScheduledFuture<?> future = scheduler.scheduleWithFixedDelay(task, Duration.ofMinutes(keyword.getCheckedIntervalMinutes()));
         runningTasks.put(keyword.getId(), future);
     }

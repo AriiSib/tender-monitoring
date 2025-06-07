@@ -69,10 +69,7 @@ public class RssMonitorService {
 
         for (RssItemDTO item : newItems) {
             SpecifiedDate specifiedDate = TenderCardParser.parseDate(item.link());
-            //todo: возможна проблема в сравнении с ZonedDateTime.now() и если continue - то мониторинг все-равно продолжается
-//            if (specifiedDate.expirationDate() == null || specifiedDate.expirationDate().isBefore(ZonedDateTime.now())) {
-//                continue;
-//            }
+
             TrackedTender tender = null;
             if (specifiedDate != null) {
                 tender = tenderMapper.toTrackedTender(item, specifiedDate);
