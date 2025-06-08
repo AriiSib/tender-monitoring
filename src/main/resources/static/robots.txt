@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /auth/
+Disallow: /admin/
+Allow: /
+
+Sitemap: https://tender-monitoring.ru/sitemap.xml

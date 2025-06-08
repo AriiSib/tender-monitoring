@@ -6,8 +6,12 @@ plugins {
 
 apply from: 'version.gradle'
 
+jar {
+    enabled = false
+}
+
 group = 'com.khokhlov'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 java {
     toolchain {

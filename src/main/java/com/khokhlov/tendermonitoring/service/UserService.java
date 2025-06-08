@@ -1,6 +1,5 @@
 package com.khokhlov.tendermonitoring.service;
 
-import com.khokhlov.tendermonitoring.error.exception.auth.InvalidPasswordException;
 import com.khokhlov.tendermonitoring.error.exception.auth.InvalidUsernameException;
 import com.khokhlov.tendermonitoring.mapper.UserMapper;
 import com.khokhlov.tendermonitoring.model.dto.UserCreateDTO;
@@ -29,10 +28,6 @@ public class UserService implements UserDetailsService {
     public UserDTO login(UserLoginDTO userDTO) {
         User user = userRepository.findByUsername(userDTO.getUsername())
                 .orElseThrow(() -> new InvalidUsernameException("User with username \"" + userDTO.getUsername() + "\" does not exist"));
-
-        if (!user.getPassword().equals(userDTO.getPassword())) {
-            throw new InvalidPasswordException("Wrong password");
-        }
 
         if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
             throw new RuntimeException("Wrong password");

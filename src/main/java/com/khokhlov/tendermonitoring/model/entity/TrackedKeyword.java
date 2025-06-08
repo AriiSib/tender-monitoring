@@ -40,6 +40,7 @@ public class TrackedKeyword {
 
     @OneToMany(mappedBy = "trackedKeyword", cascade = CascadeType.ALL)
     @ToString.Exclude
+    @Builder.Default
     private List<TrackedTender> trackedTenders = new ArrayList<>();
 
     @Override
