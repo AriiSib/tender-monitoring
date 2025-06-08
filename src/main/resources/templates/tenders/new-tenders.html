@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(title='Новые тендеры')}"></head>
+
+<body class="d-flex flex-column min-vh-100">
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+
+<main class="flex-grow-1">
+    <div class="container-xxl py-4">
+        <h1 class="h4 mb-4">Новые тендеры</h1>
+
+        <div th:if="${#lists.isEmpty(tenders)}"
+             class="alert alert-info">Пока новых тендеров нет
+        </div>
+
+        <div th:if="${!#lists.isEmpty(tenders)}" class="search-card">
+            <div class="tender-card mb-3" th:each="tender : ${tenders}">
+                <div class="row g-0">
+
+                    <div class="col-lg-8 p-3">
+                        <div class="text-muted small mb-1"
+                             th:utext="${tender.procurementLaws} + ' ' + ${tender.title} + '&emsp;&emsp;&emsp;&emsp;Найдено по ключевому слову: ' + ${tender.keyword}">
+                            Закон
+                        </div>
+
+                        <h5 class="mb-2">
+                            <a th:href="${tender.link}"
+                               class="link-primary fw-semibold"
+                               target="_blank"
+                               th:text="'№ ' + ${tender.purchaseCode}">
+                                № ...
+                            </a>
+                            <span class="badge bg-light text-dark fw-normal ms-2"
+                                  th:text="${tender.stage}">
+                Подача заявок
+              </span>
+                        </h5>
+
+                        <div class="mb-2">
+                            <span class="text-muted small d-block">Объект закупки</span>
+                            <span th:text="${tender.purchaseObject}"></span>
+                        </div>
+
+                        <div>
+                            <span class="text-muted small d-block">Заказчик</span>
+                            <span th:text="${tender.author}"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 border-start p-3 d-flex flex-column gap-2">
+                        <div>
+                            <span class="text-muted small d-block">Начальная цена</span>
+                            <span class="h6 mb-0"
+                                  th:text="${tender.price} != null ?
+                             ${#numbers.formatDecimal(tender.price,0,'COMMA',2,'POINT').replace(',', ' ')} + ' ' + ${tender.currency} : '-' ">
+              </span>
+                        </div>
+
+                        <div class="small">
+                            <div class="row g-1">
+                                <div class="col-6 text-muted">Размещено</div>
+                                <div class="col-6"
+                                     th:text="${tender.postedDate} != null ?
+                              ${#temporals.format(tender.postedDate,'dd.MM.yyyy HH:mm')} : '-' ">
+                                </div>
+                                <div class="col-6 text-muted">Окончание</div>
+                                <div class="col-6"
+                                     th:text="${tender.expirationDate} != null ?
+                              ${#temporals.format(tender.expirationDate,'dd.MM.yyyy HH:mm')} : '-' ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

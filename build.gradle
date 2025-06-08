@@ -4,8 +4,14 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
+apply from: 'version.gradle'
+
+jar {
+    enabled = false
+}
+
 group = 'com.khokhlov'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 java {
     toolchain {
@@ -24,14 +30,33 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.postgresql:postgresql'
+
+    implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
+    implementation "org.seleniumhq.selenium:selenium-java:${versions.selenium}"
+    implementation "org.seleniumhq.selenium:selenium-chrome-driver:${versions.selenium}"
+    implementation "org.jsoup:jsoup:${versions.jsoup}"
+    implementation "com.rometools:rome:${versions.rome}"
+
+    implementation "org.telegram:telegrambots-springboot-longpolling-starter:${versions.telegramBots}"
+    implementation "org.telegram:telegrambots-longpolling:${versions.telegramBots}"
+    implementation "org.telegram:telegrambots-client:${versions.telegramBots}"
+
+    compileOnly "org.projectlombok:lombok:${versions.lombok}"
     runtimeOnly 'org.postgresql:postgresql'
-    annotationProcessor 'org.projectlombok:lombok'
+
+    annotationProcessor "org.projectlombok:lombok:${versions.lombok}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
+
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher:${versions.junitPlatform}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {

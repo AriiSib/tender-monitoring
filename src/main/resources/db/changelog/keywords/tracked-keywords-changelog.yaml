@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: artemii_khokhlov
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_tracked_keywords
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: keyword
+                  type: VARCHAR(100)
+              - column:
+                  name: rss_url
+                  type: TEXT
+              - column:
+                  name: last_published_date
+                  type: TIMESTAMP
+              - column:
+                  constraints:
+                    nullable: false
+                  name: checked_interval_minutes
+                  type: INT
+              - column:
+                  name: last_update_found_at
+                  type: TIMESTAMP
+              - column:
+                  name: user_id
+                  type: BIGINT
+            tableName: tracked_keywords
+  - changeSet:
+      id: 4
+      author: artemii_khokhlov
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: tracked_keywords
+            constraintName: FK_TRACKED_KEYWORDS_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+

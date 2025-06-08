@@ -1,0 +1,54 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: artemii_khokhlov
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_tenders
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: title
+                  type: TEXT
+              - column:
+                  name: link
+                  type: TEXT
+              - column:
+                  name: procurement_laws
+                  type: VARCHAR(100)
+              - column:
+                  name: stage
+                  type: VARCHAR(100)
+              - column:
+                  name: purchase_object
+                  type: TEXT
+              - column:
+                  name: price
+                  type: DECIMAL(15,2)
+              - column:
+                  name: currency
+                  type: VARCHAR(100)
+              - column:
+                  name: posted_date
+                  type: TIMESTAMP
+              - column:
+                  name: updated_date
+                  type: TIMESTAMP
+              - column:
+                  name: expiration_date
+                  type: TIMESTAMP
+              - column:
+                  name: purchase_code
+                  type: TEXT
+              - column:
+                  name: author
+                  type: TEXT
+            tableName: tenders
+
