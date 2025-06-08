@@ -1,5 +1,6 @@
 package com.khokhlov.tendermonitoring.service;
 
+import com.khokhlov.tendermonitoring.error.exception.auth.InvalidPasswordException;
 import com.khokhlov.tendermonitoring.error.exception.auth.InvalidUsernameException;
 import com.khokhlov.tendermonitoring.mapper.UserMapper;
 import com.khokhlov.tendermonitoring.model.dto.UserCreateDTO;
@@ -9,6 +10,7 @@ import com.khokhlov.tendermonitoring.model.entity.Role;
 import com.khokhlov.tendermonitoring.model.entity.User;
 import com.khokhlov.tendermonitoring.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,7 +32,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new InvalidUsernameException("User with username \"" + userDTO.getUsername() + "\" does not exist"));
 
         if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Wrong password");
+            throw new InvalidPasswordException("Wrong password");
         }
 
         return mapper.toDTO(user);
@@ -41,7 +43,11 @@ public class UserService implements UserDetailsService {
         User userToSave = mapper.toEntity(createDTO);
         userToSave.setRole(Role.USER);
         userToSave.setPassword(passwordEncoder.encode(createDTO.getPassword()));
-        userRepository.save(userToSave);
+        try {
+            userRepository.save(userToSave);
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidUsernameException("Пользователь с именем: \"" + createDTO.getUsername() + "\" уже существует");
+        }
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package com.khokhlov.tendermonitoring.controller;
 
+import com.khokhlov.tendermonitoring.error.exception.auth.InvalidUsernameException;
 import com.khokhlov.tendermonitoring.model.dto.UserCreateDTO;
 import com.khokhlov.tendermonitoring.model.dto.UserLoginDTO;
 import com.khokhlov.tendermonitoring.service.UserService;
@@ -35,7 +36,12 @@ public class UserAuthController {
         if (bindingResult.hasErrors())
             return "auth/sign-up";
 
-        userService.registration(user);
+        try {
+            userService.registration(user);
+        } catch (InvalidUsernameException e) {
+            bindingResult.rejectValue("username", "error.user", e.getMessage());
+            return "auth/sign-up";
+        }
         return "redirect:/auth/login";
     }
 
