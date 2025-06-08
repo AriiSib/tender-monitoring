@@ -24,6 +24,9 @@ logging:
     root: INFO
     org.springframework.web: WARN
     org.hibernate.SQL: OFF
+server:
+  tomcat:
+    max-http-form-post-size: 2MB
 telegram:
   bot:
     token: ${BOT_TOKEN}
