@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:16-alpine
+    image: postgres:16
     restart: always
     container_name: tender-db
     ports:
@@ -21,6 +21,7 @@ services:
 
   app:
     build: .
+    image: ariisib/tender-monitoring:latest
     container_name: tender-app
     ports:
       - "8080:8080"
@@ -37,6 +38,8 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
     restart: on-failure
+    volumes:
+      - ./logs:/app/logs
 
 volumes:
   postgres_data:
