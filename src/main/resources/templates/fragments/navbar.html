@@ -3,20 +3,29 @@
         <a class="navbar-brand logo-text" th:href="@{/home}">
             Мониторинг <span>Тендеров</span>
         </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <div class="ms-lg-auto d-flex flex-column flex-lg-row align-items-lg-center gap-2"
+                 th:if="${session.user != null}">
+                <a th:href="@{/home}" class="nav-btn">Поиск</a>
+                <a th:href="@{/new-tenders}" class="nav-btn">Новые тендеры</a>
+                <a th:href="@{/tracking}" class="nav-btn">Мониторинг</a>
+                <a th:if="${session.user.role?.name() == 'ADMIN'}" th:href="@{/admin}" class="nav-btn">Админка</a>
 
-        <div class="ms-auto" th:if="${session.user != null}">
-            <a th:href="@{/home}" class="nav-btn">Поиск</a>
-            <a th:href="@{/new-tenders}" class="nav-btn">Новые тендеры</a>
-            <a th:href="@{/tracking}" class="nav-btn">Мониторинг</a>
-            <a th:if="${session.user.role?.name() == 'ADMIN'}" th:href="@{/admin}" class="nav-btn">Админка</a>
+                <span class="d-flex align-items-center ms-lg-2 ms-1">
+                    <span class="user-icon me-1">
+                        <img src="/images/person-circle.svg" width="20" height="20" alt="User"/>
+                    </span>
+                    <span class="navbar-text fw-medium" th:text="${session.user.username}"></span>
+                </span>
 
-            <span class="user-icon me-1"> <img src="/images/person-circle.svg" width="20" height="20"
-                                               alt="User"/></span>
-            <span class="navbar-text fw-medium" th:text="${session.user.username}"></span>
-
-            <form th:action="@{/auth/logout}" method="post" class="d-inline">
-                <button class="nav-btn logout-btn" type="submit">Выйти</button>
-            </form>
+                <form th:action="@{/auth/logout}" method="post" class="d-inline">
+                    <button class="nav-btn logout-btn" type="submit">Выйти</button>
+                </form>
+            </div>
         </div>
     </nav>
 </th:block>
