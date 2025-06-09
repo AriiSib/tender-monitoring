@@ -160,3 +160,5 @@ footer {
 .error-container .btn {
     width: 100%;
 }
+
+.table .form-control-sm { width: 5rem; }

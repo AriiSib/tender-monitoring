@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(title='Ключевые слова')}"></head>
+<body class="d-flex flex-column min-vh-100">
+<main class="container py-5">
+    <h3 class="mb-4">Ключевые слова</h3>
+
+    <table class="table table-hover align-middle">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Пользователь</th>
+            <th>Ключ</th>
+            <th>Интервал (мин)</th>
+            <th class="text-end">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="kw : ${keywords}">
+            <td th:text="${kw.id}"></td>
+            <td th:text="${kw.user.username}"></td>
+            <td th:text="${kw.keyword}"></td>
+
+            <td>
+                <form th:action="@{|/admin/keywords/${kw.id}/interval|}" method="post" class="d-flex gap-1">
+                    <input type="number" name="minutes" min="1" max="1440"
+                           th:value="${kw.checkedIntervalMinutes}" class="form-control form-control-sm">
+                    <button class="btn btn-sm btn-outline-primary">💾</button>
+                </form>
+            </td>
+
+            <td class="text-end">
+                <form th:action="@{|/admin/keywords/${kw.id}/delete|}" method="post"
+                      onsubmit="return confirm('Удалить ключ?');">
+                    <button class="btn btn-sm btn-outline-danger">🗑</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" th:href="@{/admin}">← Назад</a>
+</main>
+</body>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(title='Админ-панель')}"></head>
+<body class="d-flex flex-column min-vh-100">
+<main class="container py-5">
+    <h2 class="mb-4">Админ-панель</h2>
+
+    <div class="row text-center mb-4">
+        <div class="col-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 th:text="${userCount}">0</h4>
+                    <p class="mb-0">Пользователей</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 th:text="${keywordCount}">0</h4>
+                    <p class="mb-0">Ключевых слов</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 th:text="${tenderCount}">0</h4>
+                    <p class="mb-0">Тендеров</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><a th:href="@{/admin/users}">Управление пользователями</a></li>
+        <li class="list-group-item"><a th:href="@{/admin/keywords}">Отслеживаемые ключевые слова</a></li>
+        <li class="list-group-item"><a th:href="@{/admin/tenders}">Отслеживаемые тендеры</a></li>
+    </ul>
+</main>
+</body>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</html>
