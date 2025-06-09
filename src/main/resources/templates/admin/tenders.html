@@ -9,7 +9,7 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Заголовок</th>
+            <th>Номер тендера</th>
             <th>Ключ</th>
             <th>Цена</th>
             <th class="text-end">Удалить</th>
@@ -18,7 +18,7 @@
         <tbody>
         <tr th:each="t : ${tenders}">
             <td th:text="${t.id}"></td>
-            <td><a th:href="${t.link}" th:text="${t.title}" target="_blank"></a></td>
+            <td><a th:href="${t.link}" th:text="'№' + ${t.purchaseCode}" target="_blank"></a></td>
             <td th:text="${t.trackedKeyword.keyword}"></td>
             <td th:text="${t.price}"></td>
             <td class="text-end">

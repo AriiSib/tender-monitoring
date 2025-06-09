@@ -161,4 +161,35 @@ footer {
     width: 100%;
 }
 
-.table .form-control-sm { width: 5rem; }
+.table .form-control-sm {
+    width: 5rem;
+}
+
+.dashboard-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    background: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    color: #374151;
+    transition: background .2s, box-shadow .2s;
+}
+
+.dashboard-tile:hover,
+.dashboard-tile:focus {
+    background: var(--accent-light);
+    box-shadow: 0 2px 10px rgba(25, 118, 210, .15);
+    color: var(--accent);
+}
+
+.dashboard-tile .icon {
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--accent);
+}
