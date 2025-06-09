@@ -11,6 +11,8 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 30000
   liquibase:
+    parameters:
+      ADMIN_HASHED_PASSWORD: ${ADMIN_HASHED_PASSWORD}
     change-log: classpath:db/changelog/db.changelog-master.yaml
   jpa:
     show_sql: true
