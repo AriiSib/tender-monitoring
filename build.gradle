@@ -40,8 +40,6 @@ dependencies {
     implementation 'org.postgresql:postgresql'
 
     implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
-    implementation "org.seleniumhq.selenium:selenium-java:${versions.selenium}"
-    implementation "org.seleniumhq.selenium:selenium-chrome-driver:${versions.selenium}"
     implementation "org.jsoup:jsoup:${versions.jsoup}"
     implementation "com.rometools:rome:${versions.rome}"
 
