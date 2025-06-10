@@ -29,6 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/auth/**", "/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -57,9 +58,9 @@ public class SecurityConfig {
                         .contentSecurityPolicy(csp -> csp
                                 .policyDirectives(
                                         "default-src 'self'; " +
+                                                "script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; " +
                                                 "style-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com 'unsafe-inline'; " +
-                                                "font-src 'self' https://fonts.gstatic.com data:; " +
-                                                "script-src 'self' https://cdn.jsdelivr.net; " +
+                                                "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; " +
                                                 "img-src 'self' data:; " +
                                                 "object-src 'none'; " +
                                                 "frame-ancestors 'self';"

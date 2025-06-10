@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(title='Тендеры')}"></head>
+<body class="d-flex flex-column min-vh-100">
+<main class="container py-5">
+    <h3 class="mb-4">Отслеживаемые тендеры</h3>
+
+    <table class="table table-hover align-middle">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Номер тендера</th>
+            <th>Ключ</th>
+            <th>Цена</th>
+            <th class="text-end">Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t : ${tenders}">
+            <td th:text="${t.id}"></td>
+            <td><a th:href="${t.link}" th:text="'№' + ${t.purchaseCode}" target="_blank"></a></td>
+            <td th:text="${t.trackedKeyword.keyword}"></td>
+            <td th:text="${t.price}"></td>
+            <td class="text-end">
+                <form th:action="@{|/admin/tenders/${t.id}/delete|}" method="post"
+                      onsubmit="return confirm('Удалить тендер?');">
+                    <button class="btn btn-sm btn-outline-danger">🗑</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" th:href="@{/admin}">← Назад</a>
+</main>
+</body>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</html>

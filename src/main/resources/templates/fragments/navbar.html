@@ -13,7 +13,8 @@
                 <a th:href="@{/home}" class="nav-btn">Поиск</a>
                 <a th:href="@{/new-tenders}" class="nav-btn">Новые тендеры</a>
                 <a th:href="@{/tracking}" class="nav-btn">Мониторинг</a>
-                <a th:if="${session.user.role?.name() == 'ADMIN'}" th:href="@{/admin}" class="nav-btn">Админка</a>
+                <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+                   th:href="@{/admin}" class="nav-btn">Админка</a>
 
                 <span class="d-flex align-items-center ms-lg-2 ms-1">
                     <span class="user-icon me-1">
