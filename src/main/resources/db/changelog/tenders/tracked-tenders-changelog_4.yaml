@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 6
+      id: 5
       author: artemii_khokhlov
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -63,7 +63,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: tracked_tenders
   - changeSet:
-      id: 7
+      id: 6
       author: artemii_khokhlov
       changes:
         - addForeignKeyConstraint:
