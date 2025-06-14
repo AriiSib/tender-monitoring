@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class UserService implements UserDetailsService {
     private final UserMapper mapper;
 
     public UserDTO login(UserLoginDTO userDTO) {
-        User user = userRepository.findByUsername(userDTO.getUsername())
+        User user = userRepository.findByUsernameIgnoreCase(userDTO.getUsername())
                 .orElseThrow(() -> new InvalidUsernameException("User with username \"" + userDTO.getUsername() + "\" does not exist"));
 
         if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
@@ -63,7 +62,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsernameIgnoreCase(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return org.springframework.security.core.userdetails.User
