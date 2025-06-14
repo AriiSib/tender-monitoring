@@ -7,7 +7,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="mb-0">Админ-панель</h2>
-        <span class="badge bg-primary">v 0.1</span>
+        <span class="badge bg-primary">v 0.2</span>
     </div>
 
     <div class="row g-3 mb-4">
@@ -20,13 +20,13 @@
         <div class="col-12 col-md-4">
             <a th:href="@{/admin/keywords}" class="dashboard-tile h-100">
                 <span class="icon"><i class="bi bi-tags-fill"></i></span>
-                Отслеживаемые ключи
+                Отслеживаемые слова
             </a>
         </div>
         <div class="col-12 col-md-4">
             <a th:href="@{/admin/tenders}" class="dashboard-tile h-100">
                 <span class="icon"><i class="bi bi-file-earmark-text-fill"></i></span>
-                Отслеживаемые тендеры
+                Найденные тендеры
             </a>
         </div>
     </div>
@@ -59,47 +59,47 @@
         <div class="col-6 col-lg-3">
             <div class="card shadow-sm text-center">
                 <div class="card-body">
-                    <h4 class="mb-0">7</h4>
+                    <h4 class="mb-0">-</h4>
                     <small class="text-muted">Новых за 24 ч</small>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="card shadow-sm mb-4">
-        <div class="card-body">
-            <h5 class="card-title">Динамика новых тендеров</h5>
-            <canvas id="tendersChart" height="100"></canvas>
-        </div>
-    </div>
+<!--    <div class="card shadow-sm mb-4">-->
+<!--        <div class="card-body">-->
+<!--            <h5 class="card-title">Динамика новых тендеров</h5>-->
+<!--            <canvas id="tendersChart" height="100"></canvas>-->
+<!--        </div>-->
+<!--    </div>-->
 
 </main>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const ctx = document.getElementById('tendersChart');
-        if (!ctx) return;
+<!--<script>-->
+<!--    document.addEventListener('DOMContentLoaded', () => {-->
+<!--        const ctx = document.getElementById('tendersChart');-->
+<!--        if (!ctx) return;-->
 
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
-                datasets: [{
-                    label: 'Новые тендеры',
-                    data: [2, 5, 3, 7, 4, 6, 1],
-                    borderWidth: 2,
-                    tension: .4,
-                    fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {legend: {display: false}},
-                scales: {y: {beginAtZero: true}}
-            }
-        });
-    });
-</script>
+<!--        new Chart(ctx, {-->
+<!--            type: 'line',-->
+<!--            data: {-->
+<!--                labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],-->
+<!--                datasets: [{-->
+<!--                    label: 'Новые тендеры',-->
+<!--                    data: [2, 5, 3, 7, 4, 6, 1],-->
+<!--                    borderWidth: 2,-->
+<!--                    tension: .4,-->
+<!--                    fill: false-->
+<!--                }]-->
+<!--            },-->
+<!--            options: {-->
+<!--                responsive: true,-->
+<!--                plugins: {legend: {display: false}},-->
+<!--                scales: {y: {beginAtZero: true}}-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>

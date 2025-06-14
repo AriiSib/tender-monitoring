@@ -10,7 +10,7 @@
         <tr>
             <th>ID</th>
             <th>Пользователь</th>
-            <th>Ключ</th>
+            <th>Ключевое слово</th>
             <th>Интервал (мин)</th>
             <th class="text-end">Действия</th>
         </tr>
@@ -31,7 +31,7 @@
 
             <td class="text-end">
                 <form th:action="@{|/admin/keywords/${kw.id}/delete|}" method="post"
-                      onsubmit="return confirm('Удалить ключ?');">
+                      onsubmit="return confirm('Удалить ключевое слово?');">
                     <button class="btn btn-sm btn-outline-danger">🗑</button>
                 </form>
             </td>
