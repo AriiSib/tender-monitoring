@@ -1,7 +1,7 @@
 package com.khokhlov.tendermonitoring.model.dto;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 public record TrackedTenderViewDTO(
         String keyword,
@@ -12,9 +12,9 @@ public record TrackedTenderViewDTO(
         String purchaseObject,
         BigDecimal price,
         String currency,
-        ZonedDateTime publishedDate,
-        ZonedDateTime postedDate,
-        ZonedDateTime expirationDate,
+        LocalDateTime publishedDate,
+        LocalDateTime postedDate,
+        LocalDateTime expirationDate,
         String purchaseCode,
         String author
 ) {

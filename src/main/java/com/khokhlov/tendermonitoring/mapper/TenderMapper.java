@@ -8,9 +8,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface TenderMapper {
@@ -23,15 +20,15 @@ public interface TenderMapper {
     @Mapping(source = "rss.price", target = "price")
     @Mapping(source = "rss.currency", target = "currency")
     @Mapping(source = "rss.publishedDate", target = "publishedDate")
-    @Mapping(source = "rss.postedDate", target = "postedDate", qualifiedByName = "toZonedDateTime")
-    @Mapping(source = "rss.updatedDate", target = "updatedDate", qualifiedByName = "toZonedDateTime")
+    @Mapping(source = "rss.postedDate", target = "postedDate")
+    @Mapping(source = "rss.updatedDate", target = "updatedDate")
     @Mapping(source = "rss.purchaseCode", target = "purchaseCode")
     @Mapping(source = "rss.author", target = "author")
     @Mapping(source = "date.expirationDate", target = "expirationDate")
     TrackedTender toTrackedTender(RssItemDTO rss, SpecifiedDate date);
 
-    @Named("toZonedDateTime")
-    static ZonedDateTime toZonedDateTime(LocalDate localDate) {
-        return localDate != null ? localDate.atStartOfDay(ZoneId.systemDefault()) : null;
-    }
+//    @Named("toZonedDateTime")
+//    static ZonedDateTime toZonedDateTime(LocalDate localDate) {
+//        return localDate != null ? localDate.atStartOfDay(ZoneId.systemDefault()) : null;
+//    }
 }

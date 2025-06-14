@@ -2,7 +2,7 @@ package com.khokhlov.tendermonitoring.model.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 public record RssItemDTO(
         String title,
@@ -13,7 +13,7 @@ public record RssItemDTO(
         String purchaseObject,
         BigDecimal price,
         String currency,
-        ZonedDateTime publishedDate,
+        LocalDateTime publishedDate,
         LocalDate postedDate,
         LocalDate updatedDate,
         String identificationCode,

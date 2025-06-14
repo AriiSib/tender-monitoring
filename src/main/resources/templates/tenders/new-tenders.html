@@ -60,12 +60,12 @@
                                 <div class="col-6 text-muted">Размещено</div>
                                 <div class="col-6"
                                      th:text="${tender.postedDate} != null ?
-                              ${#temporals.format(tender.postedDate,'dd.MM.yyyy HH:mm')} : '-' ">
+                              ${#temporals.format(tender.postedDate,'dd.MM.yyyy')} : '-' ">
                                 </div>
                                 <div class="col-6 text-muted">Окончание</div>
                                 <div class="col-6"
                                      th:text="${tender.expirationDate} != null ?
-                              ${#temporals.format(tender.expirationDate,'dd.MM.yyyy HH:mm')} : '-' ">
+                              ${#temporals.format(tender.expirationDate,'dd.MM.yyyy')} : '-' ">
                                 </div>
                             </div>
                         </div>
