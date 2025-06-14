@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head(title='Админ-панель')}"></head>
 <body class="d-flex flex-column min-vh-100">
+<header th:replace="~{fragments/navbar :: navbar}"></header>
 <main class="container py-5">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -66,12 +66,12 @@
         </div>
     </div>
 
-<!--    <div class="card shadow-sm mb-4">-->
-<!--        <div class="card-body">-->
-<!--            <h5 class="card-title">Динамика новых тендеров</h5>-->
-<!--            <canvas id="tendersChart" height="100"></canvas>-->
-<!--        </div>-->
-<!--    </div>-->
+    <!--    <div class="card shadow-sm mb-4">-->
+    <!--        <div class="card-body">-->
+    <!--            <h5 class="card-title">Динамика новых тендеров</h5>-->
+    <!--            <canvas id="tendersChart" height="100"></canvas>-->
+    <!--        </div>-->
+    <!--    </div>-->
 
 </main>
 
