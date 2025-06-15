@@ -24,25 +24,25 @@ public class UserAuthController {
         return "auth/sign-in";
     }
 
-    @GetMapping("/registration")
-    public String registrationPage(Model model) {
-        model.addAttribute("user", new UserCreateDTO());
-        return "auth/sign-up";
-    }
-
-    @PostMapping("/registration")
-    public String registration(@Validated @ModelAttribute("user") UserCreateDTO user,
-                               BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            return "auth/sign-up";
-
-        try {
-            userService.registration(user);
-        } catch (InvalidUsernameException e) {
-            bindingResult.rejectValue("username", "error.user", e.getMessage());
-            return "auth/sign-up";
-        }
-        return "redirect:/auth/login";
-    }
+//    @GetMapping("/registration")
+//    public String registrationPage(Model model) {
+//        model.addAttribute("user", new UserCreateDTO());
+//        return "auth/sign-up";
+//    }
+//
+//    @PostMapping("/registration")
+//    public String registration(@Validated @ModelAttribute("user") UserCreateDTO user,
+//                               BindingResult bindingResult) {
+//        if (bindingResult.hasErrors())
+//            return "auth/sign-up";
+//
+//        try {
+//            userService.registration(user);
+//        } catch (InvalidUsernameException e) {
+//            bindingResult.rejectValue("username", "error.user", e.getMessage());
+//            return "auth/sign-up";
+//        }
+//        return "redirect:/auth/login";
+//    }
 
 }

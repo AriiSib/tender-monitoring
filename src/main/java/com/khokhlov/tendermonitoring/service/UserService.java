@@ -43,12 +43,13 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void registration(UserCreateDTO createDTO) {
         User userToSave = mapper.toEntity(createDTO);
+        userToSave.setUsername(createDTO.getUsername().trim().toLowerCase());
         userToSave.setRole(Role.USER);
         userToSave.setPassword(passwordEncoder.encode(createDTO.getPassword()));
         try {
             userRepository.save(userToSave);
         } catch (DataIntegrityViolationException e) {
-            throw new InvalidUsernameException("Пользователь с именем: \"" + createDTO.getUsername() + "\" уже существует");
+            throw new InvalidUsernameException("Пользователь с именем: \"" + createDTO.getUsername().trim() + "\" уже существует");
         }
     }
 
