@@ -72,3 +72,18 @@ databaseChangeLog:
             constraintName: FK_TRACKED_TENDERS_ON_TRACKED_KEYWORD
             referencedColumnNames: id
             referencedTableName: tracked_keywords
+  - changeSet:
+      id: 9
+      author: artemii_khokhlov
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: tracked_tenders
+            constraintName: FK_TRACKED_TENDERS_ON_TRACKED_KEYWORD
+        - addForeignKeyConstraint:
+            baseColumnNames: tracked_keyword_id
+            baseTableName: tracked_tenders
+            constraintName: FK_TRACKED_TENDERS_ON_TRACKED_KEYWORD
+            referencedColumnNames: id
+            referencedTableName: tracked_keywords
+            onDelete: CASCADE
+

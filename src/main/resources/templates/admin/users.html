@@ -16,15 +16,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="u : ${users}">
-            <td th:text="${u.id}">1</td>
-            <td th:text="${u.username}">admin</td>
-            <td th:text="${u.role}">ADMIN</td>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.username}">admin</td>
+            <td th:text="${user.role}">ADMIN</td>
             <td class="text-end">
-                <form th:action="@{|/admin/users/${u.id}/toggleRole|}" method="post" class="d-inline">
+                <form th:action="@{|/admin/users/${user.id}/toggleRole|}" method="post" class="d-inline">
                     <button class="btn btn-sm btn-outline-primary" type="submit">Сменить роль</button>
                 </form>
-                <form th:action="@{|/admin/users/${u.id}/delete|}" method="post" class="d-inline"
+                <form th:if="${user.username() != 'admin'}"
+                      th:action="@{|/admin/users/${user.id}/delete|}"
+                      method="post"
+                      class="d-inline"
                       onsubmit="return confirm('Удалить пользователя?');">
                     <button class="btn btn-sm btn-outline-danger" type="submit">Удалить</button>
                 </form>

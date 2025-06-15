@@ -45,4 +45,17 @@ databaseChangeLog:
             constraintName: FK_TRACKED_KEYWORDS_ON_USER
             referencedColumnNames: id
             referencedTableName: users
-
+  - changeSet:
+      id: 8
+      author: artemii_khokhlov
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: tracked_keywords
+            constraintName: FK_TRACKED_KEYWORDS_ON_USER
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: tracked_keywords
+            constraintName: FK_TRACKED_KEYWORDS_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+            onDelete: CASCADE
