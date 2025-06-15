@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,10 +69,8 @@ public class RssMonitorService {
         for (RssItemDTO item : newItems) {
             SpecifiedDate specifiedDate = TenderCardParser.parseDate(item.link());
 
-            TrackedTender tender = null;
-            if (specifiedDate != null) {
-                tender = tenderMapper.toTrackedTender(item, specifiedDate);
-            }
+            TrackedTender tender = tenderMapper.toTrackedTender(item, specifiedDate);
+
             tender.setTrackedKeyword(keyword);
             tender.setNotified(true);
             trackedTenders.add(tender);
@@ -99,7 +96,7 @@ public class RssMonitorService {
                 .toList();
     }
 
-    private List<RssItemDTO> filterAfterLastPublished(List<RssItemDTO> items, ZonedDateTime lastDate) {
+    private List<RssItemDTO> filterAfterLastPublished(List<RssItemDTO> items, LocalDateTime lastDate) {
         return items.stream()
                 .takeWhile(item -> item.publishedDate().isAfter(lastDate))
                 .toList();

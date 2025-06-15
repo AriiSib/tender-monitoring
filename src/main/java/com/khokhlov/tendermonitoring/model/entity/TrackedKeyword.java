@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +28,7 @@ public class TrackedKeyword {
     @Column(columnDefinition = "TEXT")
     private String rssUrl;
 
-    private ZonedDateTime lastPublishedDate;
+    private LocalDateTime lastPublishedDate;
 
     private int checkedIntervalMinutes;
 
@@ -37,6 +36,9 @@ public class TrackedKeyword {
 
     @ManyToOne
     private User user;
+
+    @Builder.Default
+    private Boolean active = true;
 
     @OneToMany(mappedBy = "trackedKeyword", cascade = CascadeType.ALL)
     @ToString.Exclude

@@ -27,7 +27,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String username = authentication.getName();
 
         UserDTO userDTO = userMapper.toDTO(
-                userRepository.findByUsername(username)
+                userRepository.findByUsernameIgnoreCase(username)
                         .orElseThrow(() -> new UsernameNotFoundException(username))
         );
         request.getSession().setAttribute("user", userDTO);

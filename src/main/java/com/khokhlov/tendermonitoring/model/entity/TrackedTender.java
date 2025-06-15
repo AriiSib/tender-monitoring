@@ -5,7 +5,7 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -41,13 +41,13 @@ public class TrackedTender {
 
     private String currency;
 
-    private ZonedDateTime publishedDate;
+    private LocalDateTime publishedDate;
 
-    private ZonedDateTime postedDate;
+    private LocalDateTime postedDate;
 
-    private ZonedDateTime updatedDate;
+    private LocalDateTime updatedDate;
 
-    private ZonedDateTime expirationDate;
+    private LocalDateTime expirationDate;
 
     @Column(columnDefinition = "TEXT")
     private String purchaseCode;

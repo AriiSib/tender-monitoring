@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head(title='Новые тендеры')}"></head>
-
+<head th:replace="~{fragments/head :: head(title='Найденные тендеры')}"></head>
 <body class="d-flex flex-column min-vh-100">
 <header th:replace="~{fragments/navbar :: navbar}"></header>
 
 <main class="flex-grow-1">
     <div class="container-xxl py-4">
-        <h1 class="h4 mb-4">Новые тендеры</h1>
+        <h1 class="h4 mb-4">Найденные тендеры</h1>
 
         <div th:if="${#lists.isEmpty(tenders)}"
              class="alert alert-info">Пока новых тендеров нет
@@ -61,12 +60,12 @@
                                 <div class="col-6 text-muted">Размещено</div>
                                 <div class="col-6"
                                      th:text="${tender.postedDate} != null ?
-                              ${#temporals.format(tender.postedDate,'dd.MM.yyyy HH:mm')} : '-' ">
+                              ${#temporals.format(tender.postedDate,'dd.MM.yyyy')} : '-' ">
                                 </div>
                                 <div class="col-6 text-muted">Окончание</div>
                                 <div class="col-6"
                                      th:text="${tender.expirationDate} != null ?
-                              ${#temporals.format(tender.expirationDate,'dd.MM.yyyy HH:mm')} : '-' ">
+                              ${#temporals.format(tender.expirationDate,'dd.MM.yyyy')} : '-' ">
                                 </div>
                             </div>
                         </div>

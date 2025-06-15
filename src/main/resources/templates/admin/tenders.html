@@ -2,15 +2,16 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head(title='Тендеры')}"></head>
 <body class="d-flex flex-column min-vh-100">
+<header th:replace="~{fragments/navbar :: navbar}"></header>
 <main class="container py-5">
-    <h3 class="mb-4">Отслеживаемые тендеры</h3>
+    <h3 class="mb-4">Найденные тендеры</h3>
 
     <table class="table table-hover align-middle">
         <thead>
         <tr>
             <th>ID</th>
             <th>Номер тендера</th>
-            <th>Ключ</th>
+            <th>Ключевое слово</th>
             <th>Цена</th>
             <th class="text-end">Удалить</th>
         </tr>

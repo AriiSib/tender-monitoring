@@ -15,8 +15,8 @@ import org.jsoup.nodes.TextNode;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -46,7 +46,7 @@ public class RssParser {
 
                 String description = entry.getDescription().getValue();
 
-                ZonedDateTime publishedDate = entry.getPublishedDate().toInstant().atZone(ZoneId.of("GMT"));
+                LocalDateTime publishedDate = entry.getPublishedDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
                 String author = entry.getAuthor();
 

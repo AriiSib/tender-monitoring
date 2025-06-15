@@ -7,25 +7,33 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 public class TenderCardParser {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
+    private static final List<TitleValueSelector> SELECTORS = List.of(
+            new TitleValueSelector("span.cardMainInfo__title", "span.cardMainInfo__content"),
+            new TitleValueSelector("div.data-block__title", "div.data-block__value")
+    );
+
     public static SpecifiedDate parseDate(String url) {
         Document doc = getDocument(url);
-        ZonedDateTime postedDate = parseDateByTitle(doc, "Дата и время начала срока подачи заявок");
-        ZonedDateTime expirationDate = parseDateByTitle(doc, "Дата и время окончания срока подачи заявок");
+        LocalDateTime postedDate = parseDateByTitle(doc, "Дата и время начала срока подачи заявок");
+        LocalDateTime expirationDate = parseDateByTitle(doc, "Дата и время окончания срока подачи заявок");
+        if (expirationDate == null) {
+            expirationDate = findDate(doc, "Окончание подачи заявок").atStartOfDay();
+        }
         return new SpecifiedDate(postedDate, expirationDate);
     }
 
-    private static ZonedDateTime parseDateByTitle(Document doc, String titleToMatch) {
+    private static LocalDateTime parseDateByTitle(Document doc, String titleToMatch) {
         try {
             Elements sections = doc.select("section.blockInfo__section");
 
@@ -37,7 +45,7 @@ public class TenderCardParser {
                         String rawText = info.text().trim();
 
                         String dateTimeStr = rawText.replaceAll("\\s*\\(.*?\\)", "").trim();
-                        LocalDateTime localDateTime = LocalDateTime.parse(dateTimeStr, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
+                        LocalDateTime localDateTime = LocalDateTime.parse(dateTimeStr, FORMATTER);
 
                         Matcher matcher = Pattern.compile("\\(МСК([+-]\\d+)\\)").matcher(rawText);
                         int utcOffset = 3;
@@ -51,7 +59,7 @@ public class TenderCardParser {
                             throw new IllegalArgumentException("Смещение UTC выходит за допустимые границы: UTC" + utcOffset);
                         }
 
-                        return ZonedDateTime.of(localDateTime, ZoneOffset.ofHours(utcOffset));
+                        return localDateTime;
                     }
                 }
             }
@@ -59,6 +67,25 @@ public class TenderCardParser {
             System.err.println("Ошибка при парсинге даты '" + titleToMatch + "': " + e.getMessage());
         }
 
+        return null;
+    }
+
+    private static LocalDate findDate(Document doc, String titleText) {
+        for (TitleValueSelector tv : SELECTORS) {
+            for (Element title : doc.select(tv.titleSel)) {
+                if (!title.text().trim().equalsIgnoreCase(titleText)) continue;
+                Element parent = title.parent();
+                Element value = parent.selectFirst(tv.valueSel);
+                if (value == null)
+                    value = title.nextElementSibling();
+
+                if (value != null) {
+                    String raw = value.text().trim();
+                    return LocalDate.parse(raw, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+
+                }
+            }
+        }
         return null;
     }
 
@@ -72,5 +99,8 @@ public class TenderCardParser {
             System.err.println("Error fetching document: " + e.getMessage());
             return null;
         }
+    }
+
+    private record TitleValueSelector(String titleSel, String valueSel) {
     }
 }

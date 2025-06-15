@@ -16,7 +16,7 @@ public class PriceParser {
         try {
             return new BigDecimal(cleaned);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Failed to parse the price: " + rawPrice, e);
+            return BigDecimal.ZERO;
         }
     }
 }

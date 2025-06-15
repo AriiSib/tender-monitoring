@@ -2,6 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head(title='Ключевые слова')}"></head>
 <body class="d-flex flex-column min-vh-100">
+<header th:replace="~{fragments/navbar :: navbar}"></header>
 <main class="container py-5">
     <h3 class="mb-4">Ключевые слова</h3>
 
@@ -10,7 +11,7 @@
         <tr>
             <th>ID</th>
             <th>Пользователь</th>
-            <th>Ключ</th>
+            <th>Ключевое слово</th>
             <th>Интервал (мин)</th>
             <th class="text-end">Действия</th>
         </tr>
@@ -31,7 +32,7 @@
 
             <td class="text-end">
                 <form th:action="@{|/admin/keywords/${kw.id}/delete|}" method="post"
-                      onsubmit="return confirm('Удалить ключ?');">
+                      onsubmit="return confirm('Удалить ключевое слово?');">
                     <button class="btn btn-sm btn-outline-danger">🗑</button>
                 </form>
             </td>
