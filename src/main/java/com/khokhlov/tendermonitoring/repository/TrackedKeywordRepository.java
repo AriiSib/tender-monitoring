@@ -12,4 +12,6 @@ public interface TrackedKeywordRepository extends CrudRepository<TrackedKeyword,
     List<TrackedKeyword> findAllByUser(User user);
 
     List<TrackedKeyword> findAllByUserId(Long id);
+
+    Iterable<TrackedKeyword> findAllByActiveTrue();
 }

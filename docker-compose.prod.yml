@@ -1,8 +1,8 @@
 services:
   db:
     image: postgres:16
-    restart: always
     container_name: tender-db
+    restart: always
     networks:
       - tender_network
     healthcheck:
@@ -20,6 +20,7 @@ services:
   app:
     image: ariisib/tender-monitoring:latest
     container_name: tender-app
+    restart: on-failure
     depends_on:
       db:
         condition: service_healthy
@@ -33,7 +34,6 @@ services:
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-    restart: on-failure
     volumes:
       - ./logs:/app/logs
 

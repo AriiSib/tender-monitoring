@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
@@ -16,22 +17,23 @@ public class DynamicMonitoringService {
 
     private final ThreadPoolTaskScheduler scheduler;
     private final RssMonitorService rssMonitorService;
-    //todo: after restart of the application - data will be lost
     private final Map<Long, ScheduledFuture<?>> runningTasks = new ConcurrentHashMap<>();
 
     public void schedule(TrackedKeyword keyword) {
-        Runnable task = () -> rssMonitorService.checkFeeds(keyword);
+        cancel(keyword.getId());
 
-        ScheduledFuture<?> future = scheduler.scheduleWithFixedDelay(task, Duration.ofMinutes(keyword.getCheckedIntervalMinutes()));
-        runningTasks.put(keyword.getId(), future);
+        Runnable task = () -> rssMonitorService.checkFeeds(keyword);
+        ScheduledFuture<?> scheduledFuture =
+                scheduler.scheduleWithFixedDelay(
+                        task,
+                        Duration.ofMinutes(keyword.getCheckedIntervalMinutes())
+                );
+        runningTasks.put(keyword.getId(), scheduledFuture);
     }
 
     public void cancel(Long keywordId) {
-        ScheduledFuture<?> future = runningTasks.get(keywordId);
-        if (future != null) {
-            future.cancel(true);
-            runningTasks.remove(keywordId);
-        }
+        Optional.ofNullable(runningTasks.remove(keywordId))
+                .ifPresent(f -> f.cancel(true));
     }
 
     public boolean isTracking(Long keywordId) {

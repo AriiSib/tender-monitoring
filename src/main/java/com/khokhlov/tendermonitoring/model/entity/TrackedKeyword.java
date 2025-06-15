@@ -37,6 +37,9 @@ public class TrackedKeyword {
     @ManyToOne
     private User user;
 
+    @Builder.Default
+    private Boolean active = true;
+
     @OneToMany(mappedBy = "trackedKeyword", cascade = CascadeType.ALL)
     @ToString.Exclude
     @Builder.Default
