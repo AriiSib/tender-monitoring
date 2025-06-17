@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -46,7 +46,7 @@ public class RssParser {
 
                 String description = entry.getDescription().getValue();
 
-                LocalDateTime publishedDate = entry.getPublishedDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                LocalDateTime publishedDate = entry.getPublishedDate().toInstant().atZone(ZoneOffset.UTC).toLocalDateTime();
 
                 String author = entry.getAuthor();
 

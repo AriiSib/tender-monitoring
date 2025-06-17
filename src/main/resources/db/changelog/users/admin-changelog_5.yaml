@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 7
+      id: 1
       author: artemii_khokhlov
       changes:
         - insert:
