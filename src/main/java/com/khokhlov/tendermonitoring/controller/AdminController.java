@@ -2,6 +2,7 @@ package com.khokhlov.tendermonitoring.controller;
 
 import com.khokhlov.tendermonitoring.error.exception.auth.InvalidUsernameException;
 import com.khokhlov.tendermonitoring.model.dto.UserCreateDTO;
+import com.khokhlov.tendermonitoring.model.entity.TrackedTender;
 import com.khokhlov.tendermonitoring.model.entity.User;
 import com.khokhlov.tendermonitoring.repository.TrackedKeywordRepository;
 import com.khokhlov.tendermonitoring.repository.TrackedTenderRepository;
@@ -9,12 +10,16 @@ import com.khokhlov.tendermonitoring.repository.UserRepository;
 import com.khokhlov.tendermonitoring.service.TrackedKeywordService;
 import com.khokhlov.tendermonitoring.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -52,7 +57,7 @@ public class AdminController {
     public String dashboard(Model model) {
         model.addAttribute("userCount", userService.count());
         model.addAttribute("keywordCount", keywordRepository.count());
-        model.addAttribute("tenderCount", trackedTenderRepository.count());
+        model.addAttribute("tenderCount", getUniqueTenders(trackedTenderRepository.findAll()).size());
         return "admin/dashboard";
     }
 
@@ -100,8 +105,23 @@ public class AdminController {
 
     @GetMapping("/tenders")
     public String tenders(Model model) {
-        model.addAttribute("tenders", trackedTenderRepository.findAll());
+        List<TrackedTender> tenders = trackedTenderRepository.findAll();
+        List<TrackedTender> uniqueTenders = getUniqueTenders(tenders);
+        model.addAttribute("tenders", uniqueTenders);
         return "admin/tenders";
+    }
+
+    @NotNull
+    private List<TrackedTender> getUniqueTenders(List<TrackedTender> tenders) {
+        return tenders.stream()
+                .collect(Collectors.toMap(
+                        TrackedTender::getPurchaseCode,
+                        tender -> tender,
+                        (first, second) -> first
+                ))
+                .values()
+                .stream()
+                .toList();
     }
 
     @PostMapping("/tenders/{id}/delete")

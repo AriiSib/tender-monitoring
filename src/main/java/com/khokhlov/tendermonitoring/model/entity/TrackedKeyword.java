@@ -32,7 +32,7 @@ public class TrackedKeyword {
 
     private int checkedIntervalMinutes;
 
-    private LocalDateTime lastUpdateFoundAt;
+    private LocalDateTime lastUpdate;
 
     @ManyToOne
     private User user;

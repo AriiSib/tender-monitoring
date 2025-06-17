@@ -34,7 +34,7 @@ public class TrackingViewService {
                         keyword.getKeyword(),
                         keyword.getCheckedIntervalMinutes(),
                         keyword.getLastPublishedDate(),
-                        keyword.getLastUpdateFoundAt(),
+                        keyword.getLastUpdate(),
                         dynamicMonitoringService.isTracking(keyword.getId())
                 ))
                 .toList();
@@ -45,7 +45,7 @@ public class TrackingViewService {
         List<TrackedTender> tenders = trackedTenderRepository.findAllForUser(user);
 
         return tenders.stream()
-//                .filter(tender -> !tender.isNotified())
+//                .filter(tender -> !tender.isNotified())  bug with the addition of the last tender as a new
                 .map(tender -> new TrackedTenderViewDTO(
                         tender.getTrackedKeyword().getKeyword(),
                         tender.getTitle(),
