@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 5
+      id: 1
       author: artemii_khokhlov
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -63,7 +63,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: tracked_tenders
   - changeSet:
-      id: 6
+      id: 2
       author: artemii_khokhlov
       changes:
         - addForeignKeyConstraint:
@@ -73,7 +73,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: tracked_keywords
   - changeSet:
-      id: 9
+      id: 3
       author: artemii_khokhlov
       changes:
         - dropForeignKeyConstraint:
@@ -86,4 +86,12 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: tracked_keywords
             onDelete: CASCADE
+  - changeSet:
+      id: 4
+      author: artemii_khokhlov
+      changes:
+        - addUniqueConstraint:
+            tableName: tracked_tenders
+            columnNames: purchase_code, tracked_keyword_id
+            constraintName: uq_tracked_tenders_pk_kw
 

@@ -13,5 +13,8 @@ public interface TrackedTenderRepository extends CrudRepository<TrackedTender, L
     @Query("SELECT t FROM TrackedTender t WHERE t.trackedKeyword.user = :user")
     List<TrackedTender> findAllForUser(@Param("user") User user);
 
+    List<TrackedTender> findAll();
+
     void deleteAll();
+    boolean existsByTrackedKeyword_IdAndPurchaseCode(Long keywordId, String purchaseCode);
 }

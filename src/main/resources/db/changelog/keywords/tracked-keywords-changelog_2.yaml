@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 3
+      id: 1
       author: artemii_khokhlov
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -29,7 +29,7 @@ databaseChangeLog:
                   name: checked_interval_minutes
                   type: INT
               - column:
-                  name: last_update_found_at
+                  name: last_update
                   type: TIMESTAMP
               - column:
                   name: user_id
@@ -39,7 +39,7 @@ databaseChangeLog:
                   type: boolean
             tableName: tracked_keywords
   - changeSet:
-      id: 4
+      id: 2
       author: artemii_khokhlov
       changes:
         - addForeignKeyConstraint:
@@ -49,7 +49,7 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: users
   - changeSet:
-      id: 8
+      id: 3
       author: artemii_khokhlov
       changes:
         - dropForeignKeyConstraint:

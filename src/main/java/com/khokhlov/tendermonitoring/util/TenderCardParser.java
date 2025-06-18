@@ -25,10 +25,11 @@ public class TenderCardParser {
 
     public static SpecifiedDate parseDate(String url) {
         Document doc = getDocument(url);
+        if (doc == null) return null;
         LocalDateTime postedDate = parseDateByTitle(doc, "Дата и время начала срока подачи заявок");
         LocalDateTime expirationDate = parseDateByTitle(doc, "Дата и время окончания срока подачи заявок");
         if (expirationDate == null) {
-            expirationDate = findDate(doc, "Окончание подачи заявок").atStartOfDay();
+            expirationDate = findDate(doc, "Окончание подачи заявок") == null ? null : findDate(doc, "Окончание подачи заявок").atStartOfDay();
         }
         return new SpecifiedDate(postedDate, expirationDate);
     }
